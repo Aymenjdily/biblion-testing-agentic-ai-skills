@@ -14,7 +14,7 @@ export function ProgressBar({
     <div className={className}>
       <div className="h-2 w-full rounded-full bg-border">
         <div
-          className="h-2 rounded-full bg-teal transition-[width] duration-[220ms] ease-out"
+          className="h-2 rounded-full bg-ember-600 transition-[width] duration-[220ms] ease-out"
           style={{ width: `${pct}%` }}
           role="progressbar"
           aria-valuenow={value}

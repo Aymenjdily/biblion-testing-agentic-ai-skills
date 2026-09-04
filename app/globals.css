@@ -1,42 +1,51 @@
 @import "tailwindcss";
 
 @theme {
-  /* ---- Color: Biblion v3 ---- */
-  --color-ink: #16181d;
-  --color-canvas: #f7f7f5;
-  --color-card: #ffffff;
+  /* ---- Color: Biblion v1.0 — Ember & Sand ---- */
 
-  --color-indigo: #3b2fd6;
-  --color-indigo-deep: #2a1fa8;
+  /* Brand — Ember */
+  --color-ember-50: #fff7ed;
+  --color-ember-100: #ffedd5;
+  --color-ember-200: #fed7aa;
+  --color-ember-300: #fdba74;
+  --color-ember-400: #fb923c;
+  --color-ember-500: #f97316;
+  --color-ember-600: #ea580c; /* primary */
+  --color-ember-700: #c2410c;
+  --color-ember-800: #9a3412;
 
-  --color-amber: #e8a33d;
-  --color-amber-ink: #8a5b10;
-  --color-amber-tint: #fff4e4;
+  /* Neutrals — Sand & Ink */
+  --color-neutral-50: #fafaf9;
+  --color-neutral-100: #f5f5f4;
+  --color-neutral-200: #e7e5e4;
+  --color-neutral-300: #d6d3d1;
+  --color-neutral-400: #a8a29e;
+  --color-neutral-500: #78716c;
+  --color-neutral-600: #57534e;
+  --color-neutral-700: #44403c;
+  --color-ink-900: #1c1917;
 
-  --color-teal: #10796b;
-  --color-teal-tint: #eaf3f1;
+  /* Semantic */
+  --color-success: #16a34a; /* completed · passed */
+  --color-warning: #d97706; /* expiring · caution */
+  --color-error: #dc2626; /* failed · destructive */
+  --color-info: #2563eb; /* new · announcements */
 
-  --color-border: #e3e3df;
-  --color-divider: #edede9;
-
-  /* neutral ramp: 50 / 200 / 300 / 400 / 500 / 700 / 900 */
-  --color-neutral-50: #f7f7f5;
-  --color-neutral-200: #e3e3df;
-  --color-neutral-300: #c7c9cc;
-  --color-neutral-400: #9aa0a8;
-  --color-neutral-500: #6e7280;
-  --color-neutral-700: #3c4048;
-  --color-neutral-900: #16181d;
+  /* Surfaces */
+  --color-background: #fbf7f1;
+  --color-surface: #ffffff;
+  --color-soft: #fff3e6;
+  --color-border: #eae3d9;
 
   /* ---- Type ---- */
-  --font-serif: var(--font-instrument-serif), Georgia, serif;
-  --font-sans: var(--font-inter-tight), "Helvetica Neue", Arial, sans-serif;
+  --font-display: var(--font-space-grotesk), "Helvetica Neue", Arial, sans-serif;
+  --font-sans: var(--font-inter), "Helvetica Neue", Arial, sans-serif;
   --font-mono: var(--font-jetbrains-mono), "Courier New", monospace;
 
-  /* ---- Radius ---- */
-  --radius-chip: 4px;
-  --radius-control: 8px;
-  --radius-card: 10px;
+  /* ---- Radius: 6 / 10 / 14 / pill ---- */
+  --radius-chip: 6px;
+  --radius-control: 10px;
+  --radius-card: 14px;
   --radius-surface: 14px;
 
   /* ---- Motion ---- */
@@ -46,22 +55,22 @@
 }
 
 html {
-  background: var(--color-canvas);
+  background: var(--color-background);
 }
 
 body {
-  background: var(--color-canvas);
-  color: var(--color-ink);
+  background: var(--color-background);
+  color: var(--color-ink-900);
   font-family: var(--font-sans);
 }
 
 ::selection {
-  background: color-mix(in srgb, var(--color-indigo) 18%, transparent);
+  background: color-mix(in srgb, var(--color-ember-600) 18%, transparent);
 }
 
-/* Always-visible 2px indigo focus ring, per spec */
+/* Always-visible 2px ember-300 focus ring, per spec */
 :focus-visible {
-  outline: 2px solid var(--color-indigo);
+  outline: 2px solid var(--color-ember-300);
   outline-offset: 2px;
   border-radius: 4px;
 }

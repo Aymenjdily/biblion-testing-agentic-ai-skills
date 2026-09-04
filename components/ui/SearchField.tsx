@@ -3,7 +3,7 @@ import { clsx } from "@/lib/clsx";
 import { SearchIcon } from "@/components/icons";
 
 interface SearchFieldProps extends InputHTMLAttributes<HTMLInputElement> {
-  /** Show the ⌘K shortcut hint on the right (full-size field only). */
+  /** Show the / shortcut hint on the right (full-size field only). */
   shortcut?: boolean;
   compact?: boolean;
 }
@@ -17,8 +17,9 @@ export function SearchField({
   return (
     <div
       className={clsx(
-        "relative flex w-full items-center rounded-control border border-border bg-card",
-        compact ? "h-[30px]" : "h-[52px] shadow-[0_1px_1.5px_rgba(22,24,29,0.06)]",
+        "relative flex w-full items-center rounded-control border border-border bg-surface transition-shadow duration-[120ms] ease-out",
+        "focus-within:border-ember-400 focus-within:shadow-[0_0_0_3px_var(--color-ember-200),0_0_0_5px_var(--color-ember-300)]",
+        compact ? "h-[34px]" : "h-[52px] shadow-[0_1px_1.5px_rgba(28,25,23,0.06)]",
         className
       )}
     >
@@ -31,14 +32,14 @@ export function SearchField({
       <input
         type="text"
         className={clsx(
-          "h-full w-full bg-transparent text-neutral-700 placeholder:text-neutral-500 focus:outline-none",
+          "h-full w-full bg-transparent text-neutral-700 placeholder:text-neutral-400 focus:outline-none",
           compact ? "pl-8 pr-3 text-[12.5px]" : "pl-11 pr-16 text-[15px]"
         )}
         {...props}
       />
       {shortcut && !compact && (
-        <kbd className="pointer-events-none absolute right-3 flex h-7 items-center rounded-chip bg-neutral-50 px-2 font-mono text-[11px] text-neutral-500">
-          ⌘ K
+        <kbd className="pointer-events-none absolute right-3 flex h-7 items-center rounded-chip border border-border bg-neutral-50 px-2 font-mono text-[11px] text-neutral-500">
+          /
         </kbd>
       )}
     </div>

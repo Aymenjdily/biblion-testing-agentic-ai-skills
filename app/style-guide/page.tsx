@@ -183,11 +183,9 @@ export default function StyleGuide() {
       {/* ---- Header ---- */}
       <header className="flex flex-wrap items-end justify-between gap-6 border-b-2 border-ember-600 pb-6">
         <div className="flex items-center gap-4">
-          <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-ember-600 text-white">
-            <BiblionMark className="h-6 w-6" />
-          </span>
+          <BiblionMark className="h-11 w-11" />
           <div>
-            <h1 className="font-display text-4xl font-bold text-ink-900">Biblion.</h1>
+            <h1 className="font-logo text-4xl font-bold text-ink-900">Biblion.</h1>
             <p className="mt-1 font-mono text-xs tracking-widest text-neutral-500">
               UI TOKENS · COMPONENTS · FOUNDATIONS
             </p>

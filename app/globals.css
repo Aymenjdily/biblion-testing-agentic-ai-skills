@@ -41,6 +41,7 @@
   --font-display: var(--font-space-grotesk), "Helvetica Neue", Arial, sans-serif;
   --font-sans: var(--font-inter), "Helvetica Neue", Arial, sans-serif;
   --font-mono: var(--font-jetbrains-mono), "Courier New", monospace;
+  --font-logo: var(--font-bitter), Georgia, serif;
 
   /* ---- Radius: 6 / 10 / 14 / pill ---- */
   --radius-chip: 6px;
@@ -66,6 +67,27 @@ body {
 
 ::selection {
   background: color-mix(in srgb, var(--color-ember-600) 18%, transparent);
+}
+
+/* Hero backdrop: soft ember color washes over the sand gradient, per landing spec */
+.bg-hero-shader {
+  background:
+    radial-gradient(
+      ellipse 70% 55% at 12% -5%,
+      color-mix(in srgb, var(--color-ember-400) 22%, transparent),
+      transparent 65%
+    ),
+    radial-gradient(
+      ellipse 60% 50% at 92% 0%,
+      color-mix(in srgb, var(--color-ember-300) 26%, transparent),
+      transparent 60%
+    ),
+    radial-gradient(
+      ellipse 50% 40% at 55% 0%,
+      color-mix(in srgb, var(--color-ember-200) 30%, transparent),
+      transparent 70%
+    ),
+    linear-gradient(to bottom, var(--color-soft), var(--color-background) 72%);
 }
 
 /* Always-visible 2px ember-300 focus ring, per spec */

@@ -216,21 +216,8 @@ export function NextIcon(props: IconProps) {
 export function BiblionMark(props: IconProps) {
   return (
     <svg viewBox="0 0 24 24" {...props}>
-      <path
-        d="M12 7c2-1.6 6-1.6 8 0v11c-2-1.6-6-1.6-8 0V7Z"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M12 7c-2-1.6-6-1.6-8 0v11c2-1.6 6-1.6 8 0V7Z"
-        fill="none"
-        stroke="currentColor"
-        strokeWidth="1.6"
-        strokeLinejoin="round"
-        opacity="0.55"
-      />
+      <path d="M2 4.5 12 7.5V21L2 18V4.5Z" fill="var(--color-ember-600)" />
+      <path d="M22 4.5 12 7.5V21l10-3V4.5Z" fill="var(--color-ember-400)" />
     </svg>
   );
 }

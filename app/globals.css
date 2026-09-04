@@ -1,26 +1,67 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  /* ---- Color: Biblion v3 ---- */
+  --color-ink: #16181d;
+  --color-canvas: #f7f7f5;
+  --color-card: #ffffff;
+
+  --color-indigo: #3b2fd6;
+  --color-indigo-deep: #2a1fa8;
+
+  --color-amber: #e8a33d;
+  --color-amber-ink: #8a5b10;
+  --color-amber-tint: #fff4e4;
+
+  --color-teal: #10796b;
+  --color-teal-tint: #eaf3f1;
+
+  --color-border: #e3e3df;
+  --color-divider: #edede9;
+
+  /* neutral ramp: 50 / 200 / 300 / 400 / 500 / 700 / 900 */
+  --color-neutral-50: #f7f7f5;
+  --color-neutral-200: #e3e3df;
+  --color-neutral-300: #c7c9cc;
+  --color-neutral-400: #9aa0a8;
+  --color-neutral-500: #6e7280;
+  --color-neutral-700: #3c4048;
+  --color-neutral-900: #16181d;
+
+  /* ---- Type ---- */
+  --font-serif: var(--font-instrument-serif), Georgia, serif;
+  --font-sans: var(--font-inter-tight), "Helvetica Neue", Arial, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), "Courier New", monospace;
+
+  /* ---- Radius ---- */
+  --radius-chip: 4px;
+  --radius-control: 8px;
+  --radius-card: 10px;
+  --radius-surface: 14px;
+
+  /* ---- Motion ---- */
+  --ease-out-biblion: cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-state: 120ms;
+  --duration-entrance: 220ms;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  background: var(--color-canvas);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+}
+
+::selection {
+  background: color-mix(in srgb, var(--color-indigo) 18%, transparent);
+}
+
+/* Always-visible 2px indigo focus ring, per spec */
+:focus-visible {
+  outline: 2px solid var(--color-indigo);
+  outline-offset: 2px;
+  border-radius: 4px;
 }

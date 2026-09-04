@@ -1,3 +1,4 @@
+import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { Space_Grotesk, Inter, JetBrains_Mono, Bitter } from "next/font/google";
 import "./globals.css";
@@ -41,7 +42,11 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${spaceGrotesk.variable} ${inter.variable} ${jetbrainsMono.variable} ${bitter.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-background text-ink-900">{children}</body>
+      <body className="min-h-full flex flex-col bg-background text-ink-900">
+        <ClerkProvider>
+          {children}
+        </ClerkProvider>
+      </body>
     </html>
   );
 }

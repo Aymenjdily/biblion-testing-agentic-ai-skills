@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { NavAuth } from "@/components/auth/NavAuth";
 import { Button } from "@/components/ui/Button";
 import {
   BiblionMark,
@@ -100,12 +101,7 @@ export default function Home() {
             </a>
           </nav>
 
-          <div className="flex items-center gap-6">
-            <a href="#" className="hidden text-sm text-neutral-600 transition-colors hover:text-ink-900 sm:block">
-              Sign in
-            </a>
-            <Button className="px-6">Get started</Button>
-          </div>
+          <NavAuth />
         </header>
 
         {/* ---- Hero ---- */}

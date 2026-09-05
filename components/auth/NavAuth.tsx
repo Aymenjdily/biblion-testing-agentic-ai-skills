@@ -8,7 +8,7 @@ import { AlertsIcon } from "@/components/icons";
 
 /** Nav auth controls: Sign in / Get started when signed out, notifications bell + UserButton when signed in. */
 export function NavAuth() {
-  const { isSignedIn } = useAuth();
+  const { isLoaded, isSignedIn } = useAuth();
   const { user } = useUser();
   const clerk = useClerk();
 
@@ -22,6 +22,10 @@ export function NavAuth() {
       });
     }
   }, [isSignedIn, user]);
+
+  if (!isLoaded) {
+    return <div aria-hidden className="h-10" />;
+  }
 
   if (isSignedIn) {
     return (

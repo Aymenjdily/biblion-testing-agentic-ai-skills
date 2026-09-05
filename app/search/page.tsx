@@ -4,8 +4,9 @@ import { Footer } from "@/components/layout/Footer";
 import { SearchField } from "@/components/ui/SearchField";
 import { Button } from "@/components/ui/Button";
 import { SearchExplorer } from "@/components/search/SearchExplorer";
+import { SearchErrorState } from "@/components/search/SearchErrorState";
 import { RecentSearches } from "@/components/search/RecentSearches";
-import { runSearch } from "@/lib/search";
+import { runSearch, type SearchResponse } from "@/lib/search";
 import { getSearchStats } from "@/sanity/lib/queries";
 
 export default async function SearchPage({ searchParams }: PageProps<"/search">) {
@@ -13,12 +14,29 @@ export default async function SearchPage({ searchParams }: PageProps<"/search">)
   const rawQuery = Array.isArray(search.q) ? search.q[0] : search.q;
   const query = (rawQuery ?? "").trim();
 
-  const [response, stats] = await Promise.all([
-    query
-      ? runSearch(query)
-      : Promise.resolve({ query: "", reply: null, results: [], resultCount: 0, courseCount: 0 }),
-    getSearchStats(),
-  ]);
+  const emptyResponse: SearchResponse = {
+    query,
+    reply: null,
+    results: [],
+    resultCount: 0,
+    courseCount: 0,
+  };
+
+  // A fault in the search agent must degrade to an error card, not take down
+  // the page. The sibling /api/search route already catches the same way.
+  let searchFailed = false;
+  const runSearchSafe = async (): Promise<SearchResponse> => {
+    if (!query) return emptyResponse;
+    try {
+      return await runSearch(query);
+    } catch (error) {
+      console.error("search page: runSearch failed", error);
+      searchFailed = true;
+      return emptyResponse;
+    }
+  };
+
+  const [response, stats] = await Promise.all([runSearchSafe(), getSearchStats()]);
 
   return (
     <div className="flex-1">
@@ -52,6 +70,10 @@ export default async function SearchPage({ searchParams }: PageProps<"/search">)
             <div className="mx-auto mt-8 max-w-xs">
               <RecentSearches currentQuery="" />
             </div>
+          </div>
+        ) : searchFailed ? (
+          <div className="mt-8">
+            <SearchErrorState query={query} />
           </div>
         ) : (
           <>

@@ -2,7 +2,12 @@ import 'server-only'
 
 import { createClient } from 'next-sanity'
 
-import { apiVersion, dataset, projectId, readToken } from '../env'
+import { apiVersion, assertValue, dataset, projectId } from '../env'
+
+const readToken = assertValue(
+  process.env.SANITY_API_READ_TOKEN,
+  'Missing environment variable: SANITY_API_READ_TOKEN',
+)
 
 // Server-only: the dataset is private and this client carries the read token.
 // Never import this module from a client component.

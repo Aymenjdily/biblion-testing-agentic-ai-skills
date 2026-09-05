@@ -10,12 +10,13 @@ export const projectId = assertValue(
   'Missing environment variable: NEXT_PUBLIC_SANITY_PROJECT_ID',
 )
 
-export const readToken = assertValue(
-  process.env.SANITY_API_READ_TOKEN,
-  'Missing environment variable: SANITY_API_READ_TOKEN',
-)
-
-function assertValue<T>(v: T | undefined, errorMessage: string): T {
+// Deliberately not exported as a top-level constant here: this file is
+// imported by sanity/lib/image.ts, which is safe to use from client
+// components. A top-level `assertValue` for the read token would run (and
+// throw) during client-bundle module evaluation even when only projectId/
+// dataset are used, since importing any export executes the whole module.
+// sanity/lib/client.ts (server-only) reads the token directly instead.
+export function assertValue<T>(v: T | undefined, errorMessage: string): T {
   if (v === undefined) {
     throw new Error(errorMessage)
   }

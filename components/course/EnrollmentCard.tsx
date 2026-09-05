@@ -36,10 +36,11 @@ export function EnrollmentCard({
           href={`/lessons/${resume.lesson.slug}?start=${resume.resumeSeconds}`}
           className="mt-5 block"
           onClick={() =>
-            posthog.capture("lesson_resumed", {
+            posthog.capture("resume_used", {
               lesson_slug: resume.lesson.slug,
               resume_seconds: resume.resumeSeconds,
               progress_percent: progress.percent,
+              surface: "course_page",
             })
           }
         >

@@ -36,7 +36,7 @@ export default async function LessonPage({
   const startSeconds = Math.max(0, parseInt(rawStart ?? "0", 10) || 0);
 
   return (
-    <LessonProgressProvider>
+    <LessonProgressProvider lessonSlug={lesson.slug}>
       <div className="flex-1">
         <Header />
 
@@ -53,7 +53,12 @@ export default async function LessonPage({
 
           <div className="mt-8 grid grid-cols-1 gap-10 lg:grid-cols-[1fr_340px]">
             <div>
-              <VideoEmbed videoUrl={lesson.videoUrl} title={lesson.title} startSeconds={startSeconds} />
+              <VideoEmbed
+                videoUrl={lesson.videoUrl}
+                title={lesson.title}
+                startSeconds={startSeconds}
+                lessonSlug={lesson.slug}
+              />
 
               <div className="mt-8">
                 <LessonTabs

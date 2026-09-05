@@ -34,10 +34,11 @@ export function ContinueLearningCard({
       <Link
         href={`/lessons/${resume.lesson.slug}?start=${resume.resumeSeconds}`}
         onClick={() =>
-          posthog.capture("continue_learning_clicked", {
-            course_title: courseTitle,
-            progress_percent: progress.percent,
+          posthog.capture("resume_used", {
+            lesson_slug: resume.lesson.slug,
             resume_seconds: resume.resumeSeconds,
+            progress_percent: progress.percent,
+            surface: "catalog_continue_card",
           })
         }
         className="flex h-10 shrink-0 items-center gap-2 rounded-control bg-soft px-4 text-[13px] font-medium text-ember-700 transition-colors hover:bg-ember-100"

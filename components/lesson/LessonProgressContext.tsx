@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useState, type ReactNode } from "react";
+import posthog from "posthog-js";
 
 type LessonProgressContextValue = {
   completed: boolean;
@@ -16,11 +17,25 @@ const LessonProgressContext = createContext<LessonProgressContextValue | null>(n
  * row via context since they sit in different, server-rendered branches of
  * the page.
  */
-export function LessonProgressProvider({ children }: { children: ReactNode }) {
+export function LessonProgressProvider({
+  lessonSlug,
+  children,
+}: {
+  lessonSlug: string;
+  children: ReactNode;
+}) {
   const [completed, setCompleted] = useState(false);
   return (
     <LessonProgressContext.Provider
-      value={{ completed, toggleCompleted: () => setCompleted((v) => !v) }}
+      value={{
+        completed,
+        toggleCompleted: () =>
+          setCompleted((v) => {
+            const next = !v;
+            if (next) posthog.capture("lesson_completed", { lesson_slug: lessonSlug });
+            return next;
+          }),
+      }}
     >
       {children}
     </LessonProgressContext.Provider>

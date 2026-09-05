@@ -36,8 +36,13 @@ export function getVideoEmbed(videoUrl: string, startSeconds = 0): VideoEmbed {
 
   const youtubeId = extractYouTubeId(url);
   if (youtubeId) {
-    const params = new URLSearchParams({ rel: "0" });
+    // enablejsapi lets VideoEmbed attach the YouTube IFrame Player API to
+    // this exact iframe for playback analytics (video_played/watch_depth) —
+    // it only adds event visibility, it doesn't change or replace the
+    // provider's own player UI (AGENTS.md section 7 still holds).
+    const params = new URLSearchParams({ rel: "0", enablejsapi: "1" });
     if (safeStart > 0) params.set("start", String(safeStart));
+    if (typeof window !== "undefined") params.set("origin", window.location.origin);
     return {
       provider: "youtube",
       embedUrl: `https://www.youtube.com/embed/${youtubeId}?${params.toString()}`,

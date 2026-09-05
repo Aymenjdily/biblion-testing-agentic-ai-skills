@@ -1,5 +1,43 @@
 # Intelligent search: Sanity Context MCP + server search API + results page
 
+> **Addendum (post-implementation):** AGENTS.md section 6 specifies the OpenAI
+> provider, but the user has no OpenAI billing and can't add any.
+>
+> First tried `@ai-sdk/google` (Gemini free tier) — worked functionally
+> (verified a real, grounded video-moment result end to end), but Gemini's
+> free tier is 5 requests/minute, and this multi-step tool-calling search
+> uses 3-4 model calls per query, so it was exhausted almost immediately in
+> real use.
+>
+> Switched to `@ai-sdk/groq` instead (`GROQ_API_KEY` in `.env.example`).
+> Nothing else in the architecture is provider-specific — the MCP
+> connection, grounding logic, and Zod schema are unchanged. Swapping
+> providers again later is a one-line change (the import and the `model:`
+> line in `lib/search.ts`).
+>
+> Groq's real free-tier limit turned out to be 8000 tokens/minute per
+> organization (`llama-3.3-70b-versatile` isn't available on this account at
+> all — confirmed against the live `/v1/models` endpoint; settled on
+> `openai/gpt-oss-20b`). The MCP's full tool set (`initial_context`,
+> `groq_query`, `schema_explorer`, `array_field_reader`) resends its schemas
+> on every step of a multi-step tool-calling loop, and every tool result
+> gets appended to the growing history sent on the *next* step — that
+> compounds fast against an 8000 TPM ceiling. Tried `groq/compound-mini`
+> for its 70000 TPM limit, but Groq's compound models run their own
+> built-in tool orchestration and reject custom tool calling outright.
+>
+> Fix: dropped `initial_context`/`schema_explorer`/`array_field_reader`
+> from the tool set entirely and hand-wrote the (small, stable) schema
+> directly into the system prompt instead, so the model never needs to call
+> them. Kept only `groq_query` (its own description trimmed — the MCP's
+> built-in ~8280-char GROQ tutorial duplicates guidance already in the
+> system prompt) plus `submit_results`. Lowered `MAX_STEPS` to 5 (system
+> prompt targets 2 groq_query calls + 1 submit_results) so a stray extra
+> step can't compound past the budget. Verified live: a cold query now
+> returns full grounded results in one request. Back-to-back queries within
+> the same 60-second window can still get starved by the shared TPM budget
+> — an inherent free-tier throughput ceiling, not a code bug.
+
 ## Goal
 
 Wire up AGENTS.md section 11's search feature end to end: the Sanity Context MCP connection, a server-side search API route that calls an LLM with MCP tools and returns grounded, structured results, and a full results page (video and lesson cards) — scoped to courses and lessons.

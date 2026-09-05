@@ -1,0 +1,842 @@
+{
+  "nextjs-app-router-in-depth-file-system-routing": {
+    "id": "9602Yzvd7ik",
+    "title": "Next.js 15 Tutorial - 5 - Routing",
+    "channel": "Codevolution",
+    "duration": 350,
+    "query": "next.js app router file system routing tutorial"
+  },
+  "nextjs-app-router-in-depth-layouts-and-templates": {
+    "id": "k48WMdl2eUc",
+    "title": "Are Templates Better Than Layouts In Next.js?",
+    "channel": "Code Ryan",
+    "duration": 380,
+    "query": "next.js layout vs template app router"
+  },
+  "nextjs-app-router-in-depth-dynamic-routes-and-params": {
+    "id": "j3QJ1Rhxxbw",
+    "title": "Next 16.0 - generateStaticParams function Explained: Supercharge Your Dynamic Routes",
+    "channel": "BuildBytesDaily",
+    "duration": 496,
+    "query": "next.js dynamic routes generateStaticParams tutorial"
+  },
+  "nextjs-app-router-in-depth-server-components": {
+    "id": "rGPpQdbDbwo",
+    "title": "React Server Components Change Everything",
+    "channel": "Web Dev Simplified",
+    "duration": 948,
+    "query": "react server components explained tutorial"
+  },
+  "nextjs-app-router-in-depth-use-client-boundary": {
+    "id": "Qdkg_mrniLk",
+    "title": "When & Where to Add “use client” in React / Next.js (Client Components vs Server Components)",
+    "channel": "ByteGrad",
+    "duration": 634,
+    "query": "use client directive next.js when to use"
+  },
+  "nextjs-app-router-in-depth-passing-data-across-the-boundary": {
+    "id": "dMCSiA5gzkU",
+    "title": "Next.js 15 Tutorial - 52 - Server and Client Components",
+    "channel": "Codevolution",
+    "duration": 379,
+    "query": "next.js passing props server component to client component"
+  },
+  "nextjs-app-router-in-depth-fetching-in-server-components": {
+    "id": "WKfPctdIDek",
+    "title": "Next.js 15 Tutorial - 68 - Fetching Data in Server Components",
+    "channel": "Codevolution",
+    "duration": 261,
+    "query": "next.js data fetching server components tutorial"
+  },
+  "nextjs-app-router-in-depth-caching-and-revalidation": {
+    "id": "VBlSe8tvg4U",
+    "title": "Next.js App Router Caching: Explained!",
+    "channel": "Vercel",
+    "duration": 1522,
+    "query": "next.js caching revalidation tutorial"
+  },
+  "nextjs-app-router-in-depth-streaming-and-suspense": {
+    "id": "2o5m1ovfl3c",
+    "title": "Loading UI with Next.js 13 and React Suspense",
+    "channel": "Vercel",
+    "duration": 187,
+    "query": "next.js streaming suspense loading ui tutorial"
+  },
+  "nextjs-app-router-in-depth-server-actions-basics": {
+    "id": "O94ESaJtHtM",
+    "title": "Next.js Server Actions...  5 awesome things you can do",
+    "channel": "Beyond Fireship",
+    "duration": 471,
+    "query": "next.js server actions tutorial"
+  },
+  "nextjs-app-router-in-depth-forms-and-validation": {
+    "id": "tLhcyBfljYo",
+    "title": "Validate Data With Zod in Server Actions Next.js (Client-Side + Server-Side)",
+    "channel": "ByteGrad",
+    "duration": 1016,
+    "query": "next.js server actions form validation zod"
+  },
+  "nextjs-app-router-in-depth-optimistic-updates": {
+    "id": "M3mGY0pgFk0",
+    "title": "I Cannot Believe React Made A Hook For This",
+    "channel": "Web Dev Simplified",
+    "duration": 525,
+    "query": "react useOptimistic hook tutorial"
+  },
+  "react-performance-engineering-react-devtools-profiler": {
+    "id": "Qwb-Za6cBws",
+    "title": "How To Maximize Performance In Your React Apps",
+    "channel": "Web Dev Simplified",
+    "duration": 778,
+    "query": "react devtools profiler tutorial performance"
+  },
+  "react-performance-engineering-core-web-vitals": {
+    "id": "cGiSr0MilsI",
+    "title": "Core Web Vitals Explained: LCP, INP & CLS",
+    "channel": "I Code It",
+    "duration": 886,
+    "query": "core web vitals LCP INP CLS explained"
+  },
+  "react-performance-engineering-finding-wasted-renders": {
+    "id": "L5kCvTuddGE",
+    "title": "Avoid unnecessary React Rerenders by Optimizing Performance",
+    "channel": "Mostly Code",
+    "duration": 558,
+    "query": "react unnecessary re-renders find and fix"
+  },
+  "react-performance-engineering-react-memo": {
+    "id": "Yh2eH4fXgbU",
+    "title": "You Probably Shouldn't Use React.memo()",
+    "channel": "Theo - t3․gg",
+    "duration": 617,
+    "query": "react memo when to use performance"
+  },
+  "react-performance-engineering-usememo-and-usecallback": {
+    "id": "vpE9I_eqHdM",
+    "title": "Learn React Hooks: useMemo - Simply Explained!",
+    "channel": "Cosden Solutions",
+    "duration": 821,
+    "query": "useMemo useCallback when to use react"
+  },
+  "react-performance-engineering-keys-and-reconciliation": {
+    "id": "fGxKOmCuH5w",
+    "title": "React Keys and Lists - Complete Tutorial!",
+    "channel": "Cosden Solutions",
+    "duration": 591,
+    "query": "react keys reconciliation lists explained"
+  },
+  "react-performance-engineering-usetransition": {
+    "id": "1xjSQJWejZM",
+    "title": "Learn React Hooks: useTransition - Simply Explained!",
+    "channel": "Cosden Solutions",
+    "duration": 641,
+    "query": "react useTransition hook tutorial"
+  },
+  "react-performance-engineering-usedeferredvalue": {
+    "id": "jCGMedd6IWA",
+    "title": "React 18 useDeferredValue Hook Crash Course",
+    "channel": "Web Dev Simplified",
+    "duration": 472,
+    "query": "react useDeferredValue tutorial"
+  },
+  "react-performance-engineering-suspense-for-data": {
+    "id": "MBlZ8Wzkbi4",
+    "title": "Modern Data Fetching in React (Complete Guide)",
+    "channel": "Cosden Solutions",
+    "duration": 1001,
+    "query": "react suspense data fetching tutorial"
+  },
+  "react-performance-engineering-code-splitting": {
+    "id": "MUSoj2JcD4A",
+    "title": "Tree shaking in JavaScript (Optimize the bundle size of your application) | Complete Example + Setup",
+    "channel": "xplodivity",
+    "duration": 330,
+    "query": "javascript code splitting bundle size tutorial"
+  },
+  "react-performance-engineering-lazy-loading-and-prefetch": {
+    "id": "fZ4zKgVXOP4",
+    "title": "Frontend System Design Essentials: Preload vs. Prefetch",
+    "channel": "I Code It",
+    "duration": 1370,
+    "query": "react lazy suspense prefetch components"
+  },
+  "react-performance-engineering-images-and-fonts": {
+    "id": "0fONene3OIA",
+    "title": "The ultimate guide to web performance",
+    "channel": "Beyond Fireship",
+    "duration": 403,
+    "query": "web performance optimize images fonts loading"
+  },
+  "typescript-for-application-developers-structural-typing": {
+    "id": "zfQgsGXTpOg",
+    "title": "Coding Shorts: Structural Typing in TypeScript",
+    "channel": "Shawn Wildermuth",
+    "duration": 709,
+    "query": "typescript structural typing explained"
+  },
+  "typescript-for-application-developers-unions-and-narrowing": {
+    "id": "CG3_Y9T03J4",
+    "title": "TypeScript Exhaustive Switch: How discriminated unions make your job easier!",
+    "channel": "Andrew Burgess",
+    "duration": 620,
+    "query": "typescript narrowing discriminated unions tutorial"
+  },
+  "typescript-for-application-developers-literal-types-and-const": {
+    "id": "6M9aZzm-kEc",
+    "title": "as const: the most underrated TypeScript feature",
+    "channel": "Matt Pocock",
+    "duration": 338,
+    "query": "typescript const assertion literal types"
+  },
+  "typescript-for-application-developers-generic-functions": {
+    "id": "EcCTIExsqmI",
+    "title": "Learn TypeScript Generics In 13 Minutes",
+    "channel": "Web Dev Simplified",
+    "duration": 772,
+    "query": "typescript generics tutorial functions"
+  },
+  "typescript-for-application-developers-generic-constraints": {
+    "id": "zfLpzpH1t6Q",
+    "title": "Extending Generic Types in TypeScript",
+    "channel": "TypeScript with Benny Code",
+    "duration": 253,
+    "query": "typescript generic constraints extends keyof"
+  },
+  "typescript-for-application-developers-generic-react-components": {
+    "id": "5s6dIkrv6Y4",
+    "title": "Learn React Generic Components In 6 Minutes",
+    "channel": "Web Dev Simplified",
+    "duration": 407,
+    "query": "typescript generic react components props"
+  },
+  "typescript-for-application-developers-conditional-types": {
+    "id": "KcDzkOJpCaI",
+    "title": "TypeScript Conditional Types & infer Explained (2026)",
+    "channel": "Sukrid LearnHub",
+    "duration": 863,
+    "query": "typescript conditional types infer tutorial"
+  },
+  "typescript-for-application-developers-mapped-types": {
+    "id": "iCEJY9XpfG8",
+    "title": "Mapped Types Explained: Keep Your Types in Sync Automatically - Advanced TypeScript",
+    "channel": "Typed Rocks",
+    "duration": 409,
+    "query": "typescript mapped types tutorial"
+  },
+  "typescript-for-application-developers-template-literal-types": {
+    "id": "nskIP1iyrAo",
+    "title": "TypeScript Template Literal Types",
+    "channel": "Harry Wolff",
+    "duration": 1151,
+    "query": "typescript template literal types tutorial"
+  },
+  "typescript-for-application-developers-tsconfig-strictness": {
+    "id": "0XrviXgk_rY",
+    "title": "TypeScript tsconfig.json Explained: Strict Mode, Paths & More",
+    "channel": "Sukrid LearnHub",
+    "duration": 593,
+    "query": "typescript tsconfig strict mode explained"
+  },
+  "typescript-for-application-developers-typing-apis-with-zod": {
+    "id": "9UVPk0Ulm6U",
+    "title": "Zod Makes TypeScript Even Better",
+    "channel": "Web Dev Simplified",
+    "duration": 434,
+    "query": "zod typescript schema validation tutorial"
+  },
+  "typescript-for-application-developers-declaration-files": {
+    "id": "s_CZeWuEZ_s",
+    "title": "What Are *.d.ts files? How to Use *.d.ts Files in TypeScript?",
+    "channel": "Maksim Ivanov",
+    "duration": 349,
+    "query": "typescript declaration files d.ts tutorial"
+  },
+  "building-ai-apps-with-llms-tokens-and-context-windows": {
+    "id": "-QVoIxEpFkM",
+    "title": "What is a Context Window? Unlocking LLM Secrets",
+    "channel": "IBM Technology",
+    "duration": 691,
+    "query": "llm tokens context window explained"
+  },
+  "building-ai-apps-with-llms-temperature-and-sampling": {
+    "id": "-BBulGM6xF0",
+    "title": "LLM Prompt Engineering with Random Sampling: Temperature, Top-k, Top-p",
+    "channel": "DataMListic",
+    "duration": 491,
+    "query": "llm temperature top_p sampling explained"
+  },
+  "building-ai-apps-with-llms-choosing-a-model": {
+    "id": "pYax2rupKEY",
+    "title": "How to Choose Large Language Models: A Developer’s Guide to LLMs",
+    "channel": "IBM Technology",
+    "duration": 417,
+    "query": "choosing the right llm model comparison"
+  },
+  "building-ai-apps-with-llms-system-prompts": {
+    "id": "MO3U1X8-NNQ",
+    "title": "How to Write Better System Prompts",
+    "channel": "ZazenCodes",
+    "duration": 1261,
+    "query": "system prompt design best practices llm"
+  },
+  "building-ai-apps-with-llms-few-shot-prompting": {
+    "id": "9qdgEBVkWR4",
+    "title": "Discover Few-Shot Prompting | Google AI Essentials",
+    "channel": "Grow with Google",
+    "duration": 271,
+    "query": "few shot prompting examples tutorial"
+  },
+  "building-ai-apps-with-llms-structured-output": {
+    "id": "CllLqPwCjD4",
+    "title": "Getting Structured Output in JSON format",
+    "channel": "Telusko",
+    "duration": 555,
+    "query": "llm structured output json schema tutorial"
+  },
+  "building-ai-apps-with-llms-tool-calling": {
+    "id": "gMeTK6zzaO4",
+    "title": "LLM Function Calling - AI Tools Deep Dive",
+    "channel": "Adam Lucek",
+    "duration": 1874,
+    "query": "llm function calling tools tutorial"
+  },
+  "building-ai-apps-with-llms-agent-loops": {
+    "id": "GErEgIOMy_4",
+    "title": "Building an AI Agent Loop - OpenClaw From Scratch (ep 1)",
+    "channel": "Josh Uses Ai",
+    "duration": 950,
+    "query": "building llm agent loop tutorial"
+  },
+  "building-ai-apps-with-llms-guardrails-and-evals": {
+    "id": "GvNrhULVpHI",
+    "title": "LangChain Project 10: Build a Self-Correcting AI (Guardrails + Auto-Fix Pipeline) | Llama 3 + LCEL",
+    "channel": "NIIT",
+    "duration": 438,
+    "query": "llm evaluation guardrails testing tutorial"
+  },
+  "building-ai-apps-with-llms-streaming-responses": {
+    "id": "hOAAg1WaZh8",
+    "title": "Streaming in React the Simple Way: Server-Sent Events (with FastAPI)",
+    "channel": "Techno Pain",
+    "duration": 536,
+    "query": "streaming llm response server sent events tutorial"
+  },
+  "building-ai-apps-with-llms-cost-and-latency": {
+    "id": "E3j-4XH0q4g",
+    "title": "Optimize LLM Latency by 10x - From Amazon AI Engineer",
+    "channel": "Trevor Spires",
+    "duration": 805,
+    "query": "reduce llm api cost latency optimization"
+  },
+  "building-ai-apps-with-llms-caching-and-rate-limits": {
+    "id": "u57EnkQaUTY",
+    "title": "What is Prompt Caching? Optimize LLM Latency with AI Transformers",
+    "channel": "IBM Technology",
+    "duration": 546,
+    "query": "llm prompt caching rate limiting tutorial"
+  },
+  "retrieval-augmented-generation-from-scratch-what-embeddings-are": {
+    "id": "wgfSDrqYMJ4",
+    "title": "What are Word Embeddings?",
+    "channel": "IBM Technology",
+    "duration": 518,
+    "query": "text embeddings explained vector representation"
+  },
+  "retrieval-augmented-generation-from-scratch-vector-databases": {
+    "id": "dN0lsF2cvm4",
+    "title": "Vector Databases simply explained! (Embeddings & Indexes)",
+    "channel": "AssemblyAI",
+    "duration": 263,
+    "query": "vector database tutorial explained"
+  },
+  "retrieval-augmented-generation-from-scratch-similarity-metrics": {
+    "id": "yGsGQBGzy6Y",
+    "title": "Cosine Distance vs Euclidean Distance in Machine Learning and NLP with Word2Vec or Glove Vectors",
+    "channel": "Rohan-Paul-AI",
+    "duration": 473,
+    "query": "cosine similarity vs euclidean distance embeddings"
+  },
+  "retrieval-augmented-generation-from-scratch-chunking-strategies": {
+    "id": "pIGRwMjhMaQ",
+    "title": "Chunking Strategies in RAG: Optimising Data for Advanced AI Responses",
+    "channel": "Mervin Praison",
+    "duration": 842,
+    "query": "rag chunking strategies tutorial"
+  },
+  "retrieval-augmented-generation-from-scratch-metadata-and-filtering": {
+    "id": "RPpGIxmdZYs",
+    "title": "LangExtract + RAG: Smarter Retrieval with Metadata Filtering",
+    "channel": "Prompt Engineering",
+    "duration": 744,
+    "query": "rag metadata filtering vector search"
+  },
+  "retrieval-augmented-generation-from-scratch-keeping-the-index-fresh": {
+    "id": "PmA_0DT7zds",
+    "title": "The Problem of Updating Embeddings in Vector Databases",
+    "channel": "neptune_ai",
+    "duration": 358,
+    "query": "incremental reindexing vector database updates"
+  },
+  "retrieval-augmented-generation-from-scratch-hybrid-search": {
+    "id": "lYxGYXjfrNI",
+    "title": "Advanced RAG 03 - Hybrid Search BM25 & Ensembles",
+    "channel": "Sam Witteveen",
+    "duration": 407,
+    "query": "hybrid search bm25 vector rag tutorial"
+  },
+  "retrieval-augmented-generation-from-scratch-reranking": {
+    "id": "aVgZE746OXw",
+    "title": "How Retrieval and Reranking works in RAG | Bi Encoder vs Cross Encoder",
+    "channel": "Techventures",
+    "duration": 315,
+    "query": "reranker cross encoder rag tutorial"
+  },
+  "retrieval-augmented-generation-from-scratch-evaluating-retrieval": {
+    "id": "7_LTU0LA374",
+    "title": "RAG Evaluation: Precision, Recall, Faithfulness, RAGAS Explained Clearly",
+    "channel": "Logical Lenses",
+    "duration": 739,
+    "query": "evaluating rag retrieval metrics recall precision"
+  },
+  "retrieval-augmented-generation-from-scratch-grounding-and-citations": {
+    "id": "YZmCy-cGmbs",
+    "title": "Citation Grounding for RAG: Reduce Hallucinations in Python",
+    "channel": "Professor Py: AI Engineering",
+    "duration": 436,
+    "query": "rag citations grounding llm answers"
+  },
+  "retrieval-augmented-generation-from-scratch-handling-no-answer": {
+    "id": "DAmklaX4UKE",
+    "title": "Stop LLM Hallucination - The Modern RAG Anatomy",
+    "channel": "MartinHanderPhD",
+    "duration": 1293,
+    "query": "llm hallucination prevention no answer rag"
+  },
+  "retrieval-augmented-generation-from-scratch-end-to-end-rag-evaluation": {
+    "id": "cRz0BWkuwHg",
+    "title": "Key Metrics and Evaluation Methods for RAG",
+    "channel": "What's AI by Louis-François Bouchard",
+    "duration": 643,
+    "query": "rag evaluation framework end to end tutorial"
+  },
+  "python-for-data-work-python-data-types": {
+    "id": "MZZSMaEAC2g",
+    "title": "Python dictionaries are easy 📙",
+    "channel": "Bro Code",
+    "duration": 486,
+    "query": "python lists dictionaries tutorial beginners"
+  },
+  "python-for-data-work-comprehensions": {
+    "id": "YlY2g2xrl6Q",
+    "title": "Learn Python LIST COMPREHENSIONS in 10 minutes! 📃",
+    "channel": "Bro Code",
+    "duration": 620,
+    "query": "python list comprehension tutorial"
+  },
+  "python-for-data-work-files-and-csv": {
+    "id": "H-hagjt65cE",
+    "title": "Learn HOW to Read CSV Files in Python!",
+    "channel": "Earthly",
+    "duration": 395,
+    "query": "python read csv files tutorial"
+  },
+  "python-for-data-work-dataframes-basics": {
+    "id": "EXIgjIBu4EU",
+    "title": "Learn Pandas in 30 Minutes - Python Pandas Tutorial",
+    "channel": "Tech With Tim",
+    "duration": 1837,
+    "query": "pandas dataframe tutorial beginners"
+  },
+  "python-for-data-work-cleaning-data": {
+    "id": "KdmPHEnPJPs",
+    "title": "Python Pandas Tutorial (Part 9): Cleaning Data - Casting Datatypes and Handling Missing Values",
+    "channel": "Corey Schafer",
+    "duration": 1914,
+    "query": "pandas data cleaning missing values tutorial"
+  },
+  "python-for-data-work-groupby-and-aggregation": {
+    "id": "VRmXto2YA2I",
+    "title": "Group By and Aggregate Functions in Pandas | Python Pandas Tutorials",
+    "channel": "Alex The Analyst",
+    "duration": 665,
+    "query": "pandas groupby aggregation tutorial"
+  },
+  "python-for-data-work-matplotlib-basics": {
+    "id": "7Lc2AxiM17o",
+    "title": "Learn Matplotlib in 30 Minutes - Python Matplotlib Tutorial",
+    "channel": "Tech With Tim",
+    "duration": 1851,
+    "query": "matplotlib tutorial beginners plotting"
+  },
+  "python-for-data-work-seaborn-statistical-plots": {
+    "id": "rLVCSmtoA7U",
+    "title": "Seaborn Crash Course - Data Visualization in Python",
+    "channel": "NeuralNine",
+    "duration": 2156,
+    "query": "seaborn tutorial statistical data visualization"
+  },
+  "python-for-data-work-telling-a-story-with-charts": {
+    "id": "fBgk_cNCnsk",
+    "title": "How to Choose the Best Chart for Your Data Visualization: Ask Yourself These 3 Key Questions",
+    "channel": "Maven Analytics",
+    "duration": 369,
+    "query": "data visualization best practices choosing charts"
+  },
+  "python-for-data-work-jupyter-notebooks": {
+    "id": "YuWZNV4BkkY",
+    "title": "5 Jupyter Notebook Tips & Tricks to Improve your Data Science Workflow!",
+    "channel": "Keith Galli",
+    "duration": 1397,
+    "query": "jupyter notebook tutorial best practices"
+  },
+  "python-for-data-work-virtual-environments": {
+    "id": "Y21OR1OPC9A",
+    "title": "Python Virtual Environments - Full Tutorial for Beginners",
+    "channel": "Tech With Tim",
+    "duration": 545,
+    "query": "python virtual environment venv pip tutorial"
+  },
+  "python-for-data-work-automating-a-data-job": {
+    "id": "eZfD6x9FJ4E",
+    "title": "How to build and automate your Python ETL pipeline with Airflow | Data pipeline | Python",
+    "channel": "BI Insights Inc",
+    "duration": 690,
+    "query": "python automate data pipeline script tutorial"
+  },
+  "system-design-foundations-load-balancing": {
+    "id": "chyZRNT7eEo",
+    "title": "Load Balancers for System Design Interviews",
+    "channel": "Exponent",
+    "duration": 282,
+    "query": "load balancing system design explained"
+  },
+  "system-design-foundations-caching-layers": {
+    "id": "wh98s0XhMmQ",
+    "title": "Caching Pitfalls Every Developer Should Know",
+    "channel": "ByteByteGo",
+    "duration": 401,
+    "query": "caching strategies system design explained"
+  },
+  "system-design-foundations-message-queues": {
+    "id": "1ISRd0bS714",
+    "title": "Message Queues in System Design Interviews w/ Meta Staff Engineer",
+    "channel": "Hello Interview",
+    "duration": 1606,
+    "query": "message queue system design tutorial"
+  },
+  "system-design-foundations-sharding-and-partitioning": {
+    "id": "be6PLMKKSto",
+    "title": "The Basics of Database Sharding and Partitioning in System Design",
+    "channel": "Exponent",
+    "duration": 362,
+    "query": "database sharding partitioning system design"
+  },
+  "system-design-foundations-replication": {
+    "id": "bI8Ry6GhMSE",
+    "title": "Database Replication Explained (in 5 Minutes)",
+    "channel": "Exponent",
+    "duration": 302,
+    "query": "database replication leader follower explained"
+  },
+  "system-design-foundations-consistency-and-cap": {
+    "id": "gkg-FAEXIkY",
+    "title": "Friendly Intro To the CAP Theorem (Consistency vs Availability vs Partition Tolerance)",
+    "channel": "Studying With Alex",
+    "duration": 408,
+    "query": "CAP theorem consistency models explained"
+  },
+  "system-design-foundations-rest-vs-graphql": {
+    "id": "yWzKJPw_VzM",
+    "title": "What Is GraphQL? REST vs. GraphQL",
+    "channel": "ByteByteGo",
+    "duration": 315,
+    "query": "rest vs graphql api design comparison"
+  },
+  "system-design-foundations-rate-limiting": {
+    "id": "YXkOdWBwqaA",
+    "title": "Rate Limiter System Design: Token Bucket, Leaky Bucket, Scaling",
+    "channel": "ByteByteGo",
+    "duration": 466,
+    "query": "rate limiting algorithms token bucket explained"
+  },
+  "system-design-foundations-idempotency-and-retries": {
+    "id": "t99NvIazD68",
+    "title": "Idempotency in APIs: you should be aware of this!",
+    "channel": "Software Developer Diaries",
+    "duration": 451,
+    "query": "idempotency key api retries explained"
+  },
+  "system-design-foundations-observability": {
+    "id": "aJpzr8648XE",
+    "title": "Metrics, Logs and Traces: What To Observe and  Why",
+    "channel": "Tech Upskill",
+    "duration": 489,
+    "query": "observability logs metrics traces explained"
+  },
+  "system-design-foundations-failure-modes-and-timeouts": {
+    "id": "nzeKH7moGfo",
+    "title": "3 Ways to Make Microservices Fail-Proof with Spring Boot (Retry, Circuit Breaker, Timeout)",
+    "channel": "LetsCodeAndAchieve",
+    "duration": 254,
+    "query": "circuit breaker timeout retry pattern microservices"
+  },
+  "system-design-foundations-capacity-estimation": {
+    "id": "UC5xf8FbdJc",
+    "title": "Back-Of-The-Envelope Estimation / Capacity Planning",
+    "channel": "ByteByteGo",
+    "duration": 512,
+    "query": "back of the envelope capacity estimation system design"
+  },
+  "postgresql-for-developers-select-and-joins": {
+    "id": "G3lJAxg1cy8",
+    "title": "Learn MySQL joins in 5 minutes!",
+    "channel": "Bro Code",
+    "duration": 304,
+    "query": "sql joins tutorial inner left outer"
+  },
+  "postgresql-for-developers-aggregates-and-grouping": {
+    "id": "nNrgRVIzeHg",
+    "title": "Advanced Aggregate Functions in SQL (GROUP BY, HAVING vs. WHERE)",
+    "channel": "Becoming a Data Scientist",
+    "duration": 360,
+    "query": "sql group by having aggregate functions tutorial"
+  },
+  "postgresql-for-developers-ctes-and-window-functions": {
+    "id": "rIcB4zMYMas",
+    "title": "SQL Window Functions | Clearly Explained | PARTITION BY, ORDER BY, ROW_NUMBER, RANK, DENSE_RANK",
+    "channel": "Maven Analytics",
+    "duration": 472,
+    "query": "sql window functions cte tutorial"
+  },
+  "postgresql-for-developers-normalization": {
+    "id": "FzVCGou8SMA",
+    "title": "Learn Database Normalization Fast | 1NF, 2NF, 3NF Explained Simply (2025)",
+    "channel": "DbSchema Database Designer",
+    "duration": 213,
+    "query": "database normalization explained tutorial"
+  },
+  "postgresql-for-developers-constraints-and-keys": {
+    "id": "5kiMg7GXAsY",
+    "title": "What is a Foreign Key Constraint? Understanding Primary & Foreign Keys",
+    "channel": "CockroachDB",
+    "duration": 233,
+    "query": "postgresql constraints foreign keys tutorial"
+  },
+  "postgresql-for-developers-data-types-and-jsonb": {
+    "id": "PZFiThbuTFg",
+    "title": "[Live Demo] Query JSON Data In Postgres Database | JSONB Data Type In Postgresql",
+    "channel": "LimeGuru",
+    "duration": 754,
+    "query": "postgresql jsonb data types tutorial"
+  },
+  "postgresql-for-developers-indexes": {
+    "id": "NI9wYuVIYcA",
+    "title": "B-Tree Indexes",
+    "channel": "Ivan talks about computers",
+    "duration": 273,
+    "query": "postgresql indexes btree explained tutorial"
+  },
+  "postgresql-for-developers-explain-analyze": {
+    "id": "P7EUFtjeAmI",
+    "title": "Postgres Explain Explained - How Databases Prepare Optimal Query Plans to Execute SQL",
+    "channel": "Hussein Nasser",
+    "duration": 617,
+    "query": "postgresql explain analyze query plan tutorial"
+  },
+  "postgresql-for-developers-query-tuning": {
+    "id": "YON9PliOYFk",
+    "title": "5 Secrets for making PostgreSQL run BLAZING FAST. How to improve database performance.",
+    "channel": "Dreams of Code",
+    "duration": 492,
+    "query": "postgresql slow query optimization tutorial"
+  },
+  "postgresql-for-developers-transactions-and-isolation": {
+    "id": "G8wDjV0N9tk",
+    "title": "Transaction Isolation Levels With PostgreSQL as an example",
+    "channel": "mkdev",
+    "duration": 498,
+    "query": "postgresql transaction isolation levels explained"
+  },
+  "postgresql-for-developers-migrations": {
+    "id": "mr_J5v398Qo",
+    "title": "Zero-downtime migrations | Postgres.FM 048 | #PostgreSQL #Postgres podcast",
+    "channel": "PostgresTV",
+    "duration": 1893,
+    "query": "zero downtime database migration postgres"
+  },
+  "postgresql-for-developers-backups-and-pooling": {
+    "id": "9IcyoLxRAYY",
+    "title": "Fortify Your Data Fortress: Master PostgreSQL Backup & Restore Techniques!",
+    "channel": "CloudOps Insider",
+    "duration": 1872,
+    "query": "postgresql backup restore connection pooling"
+  },
+  "devops-with-docker-and-kubernetes-docker-images-and-dockerfiles": {
+    "id": "SnSH8Ht3MIc",
+    "title": "Build YOUR OWN Dockerfile, Image, and Container - Docker Tutorial",
+    "channel": "Techno Tim",
+    "duration": 1100,
+    "query": "docker tutorial images containers dockerfile"
+  },
+  "devops-with-docker-and-kubernetes-layers-and-build-cache": {
+    "id": "_Q9KSFUZH0c",
+    "title": "Docker Multi-Stage Builds - Fast and Efficient Dockerfiles",
+    "channel": "Depot",
+    "duration": 391,
+    "query": "docker multi stage build layer caching tutorial"
+  },
+  "devops-with-docker-and-kubernetes-docker-compose": {
+    "id": "iTL3Edxzgug",
+    "title": "Docker Compose Tutorial: Run Multi-Container Apps Easily! 🐳",
+    "channel": "CodeLucky",
+    "duration": 194,
+    "query": "docker compose tutorial multi container"
+  },
+  "devops-with-docker-and-kubernetes-pods-and-deployments": {
+    "id": "TlHvYWVUZyc",
+    "title": "Kubernetes Explained in 6 Minutes | k8s Architecture",
+    "channel": "ByteByteGo",
+    "duration": 388,
+    "query": "kubernetes pods deployments tutorial explained"
+  },
+  "devops-with-docker-and-kubernetes-services-and-ingress": {
+    "id": "NPFbYpb0I7w",
+    "title": "Kubernetes Ingress in 5 mins",
+    "channel": "IBM Technology",
+    "duration": 341,
+    "query": "kubernetes services ingress networking tutorial"
+  },
+  "devops-with-docker-and-kubernetes-configmaps-and-secrets": {
+    "id": "FAnQTgr04mU",
+    "title": "Kubernetes ConfigMap and Secret as Kubernetes Volumes | Demo",
+    "channel": "TechWorld with Nana",
+    "duration": 1014,
+    "query": "kubernetes configmap secrets tutorial"
+  },
+  "devops-with-docker-and-kubernetes-ci-cd-pipelines": {
+    "id": "YLtlz88zrLg",
+    "title": "CI/CD Tutorial using GitHub Actions - Automated Testing & Automated Deployments",
+    "channel": "Tom Shaw",
+    "duration": 373,
+    "query": "ci cd pipeline github actions tutorial"
+  },
+  "devops-with-docker-and-kubernetes-rolling-deploys-and-rollbacks": {
+    "id": "wWA9JgAvuqw",
+    "title": "Kubernetes Rolling Updates & Rollbacks | Zero Downtime Deployments Explained",
+    "channel": "Techi Nik",
+    "duration": 524,
+    "query": "kubernetes rolling update rollback deployment strategy"
+  },
+  "devops-with-docker-and-kubernetes-helm": {
+    "id": "jUYNS90nq8U",
+    "title": "How to Create Helm Charts - The Ultimate Guide",
+    "channel": "DevOps Journey",
+    "duration": 1346,
+    "query": "helm charts kubernetes tutorial"
+  },
+  "devops-with-docker-and-kubernetes-monitoring-and-logs": {
+    "id": "gBdyIv9d_O8",
+    "title": "Project 5: Setup Monitoring and Alerting on Kubernetes | Prometheus and Grafana Tutorial",
+    "channel": "Tech Tutorials with Piyush",
+    "duration": 1908,
+    "query": "kubernetes monitoring prometheus grafana logs tutorial"
+  },
+  "devops-with-docker-and-kubernetes-autoscaling": {
+    "id": "dRC-5Z2p7Ns",
+    "title": "Learn Horizontal Pod Autoscaler (HPA) | Hands-on | Kubernetes Tutorial for Beginners | K21Academy",
+    "channel": "Docker & Kubernetes with K21Academy",
+    "duration": 1685,
+    "query": "kubernetes horizontal pod autoscaler tutorial"
+  },
+  "devops-with-docker-and-kubernetes-resource-limits-and-troubleshooting": {
+    "id": "JLw_pHLCN4Y",
+    "title": "Kubernetes OOMKilled: Fix Memory Limit Issues & Exit Code 137 | K8s Troubleshooting Tutorial",
+    "channel": "CodeLucky",
+    "duration": 308,
+    "query": "kubernetes resource requests limits troubleshooting oomkilled"
+  },
+  "practical-web-security-owasp-top-ten": {
+    "id": "wUaeKEl1RCw",
+    "title": "OWASP Top 10 Web Application Security Risks",
+    "channel": "Telusko",
+    "duration": 898,
+    "query": "owasp top 10 explained web application security"
+  },
+  "practical-web-security-authentication-vs-authorization": {
+    "id": "7ijBiXddB7w",
+    "title": "Authentication vs Authorization Explained",
+    "channel": "xplodivity",
+    "duration": 221,
+    "query": "authentication vs authorization explained"
+  },
+  "practical-web-security-secure-defaults": {
+    "id": "130ioey4isw",
+    "title": "The Principle of Least Privilege Explained Simple",
+    "channel": "Heimdal®",
+    "duration": 296,
+    "query": "principle of least privilege secure defaults explained"
+  },
+  "practical-web-security-cross-site-scripting": {
+    "id": "pD6C1-zSxIM",
+    "title": "Cross-Site Scripting Explained with Examples and How to Prevent XSS with Content Security Policy",
+    "channel": "Hussein Nasser",
+    "duration": 1112,
+    "query": "cross site scripting xss explained prevention"
+  },
+  "practical-web-security-sql-injection": {
+    "id": "AOXMDbc11AE",
+    "title": "How Do Parameterized Queries Prevent SQL Injection?",
+    "channel": "Server Logic Simplified",
+    "duration": 254,
+    "query": "sql injection explained prevention parameterized queries"
+  },
+  "practical-web-security-csrf": {
+    "id": "80S8h5hEwTY",
+    "title": "Your App Is NOT Secure If You Don’t Use CSRF Tokens",
+    "channel": "Web Dev Simplified",
+    "duration": 597,
+    "query": "csrf attack explained prevention tokens"
+  },
+  "practical-web-security-sessions-vs-jwt": {
+    "id": "z9-_YQWxwJ4",
+    "title": "Cookies vs Sessions vs JWT Authentication Explained | Web Security Simplified",
+    "channel": "TechStack Journey",
+    "duration": 492,
+    "query": "session cookies vs jwt authentication explained"
+  },
+  "practical-web-security-password-storage": {
+    "id": "qgpsIBLvrGY",
+    "title": "Password Storage Tier List: encryption, hashing, salting, bcrypt, and beyond",
+    "channel": "Studying With Alex",
+    "duration": 616,
+    "query": "password hashing bcrypt argon2 explained"
+  },
+  "practical-web-security-mfa-and-oauth": {
+    "id": "ZV5yTm4pT8g",
+    "title": "OAuth 2 Explained In Simple Terms",
+    "channel": "ByteByteGo",
+    "duration": 272,
+    "query": "multi factor authentication oauth oidc explained"
+  },
+  "practical-web-security-https-headers-and-csp": {
+    "id": "4bQeGUzHpOE",
+    "title": "HTTP Secure Headers for Web App Security | CORS, CSP, HSTS and more",
+    "channel": "ByteMonk",
+    "duration": 486,
+    "query": "security headers content security policy https tutorial"
+  },
+  "practical-web-security-secrets-management": {
+    "id": "FQE_gyEwu0Q",
+    "title": "HashiCorp Vault + Terraform: The Ultimate Secrets Management Guide",
+    "channel": "KodeKloud",
+    "duration": 1125,
+    "query": "secrets management environment variables vault tutorial"
+  },
+  "practical-web-security-dependency-and-supply-chain": {
+    "id": "njm1nZlrR68",
+    "title": "Supply Chain Security - The Ultimate Guide to Software Composition Analysis (SCA) Tools",
+    "channel": "Aikido Security",
+    "duration": 824,
+    "query": "software supply chain security dependencies explained"
+  }
+}

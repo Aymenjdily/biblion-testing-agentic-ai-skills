@@ -1,0 +1,24 @@
+{
+  "name": "biblion-studio",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "sanity dev",
+    "build": "sanity build",
+    "deploy": "sanity deploy",
+    "typegen": "sanity schema extract --path=schema.json && sanity typegen generate"
+  },
+  "dependencies": {
+    "@sanity/icons": "^3",
+    "@sanity/vision": "^5.31.2",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
+    "sanity": "^5.31.2",
+    "styled-components": "^6.5.3"
+  },
+  "devDependencies": {
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "typescript": "^5"
+  }
+}

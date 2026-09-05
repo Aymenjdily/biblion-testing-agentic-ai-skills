@@ -128,6 +128,12 @@ export async function runSearch(query: string): Promise<SearchResponse> {
     return { query, reply: null, results: [], resultCount: 0, courseCount: 0 };
   }
 
+  // Fail fast with a clear message so a missing key surfaces here, not as an
+  // obscure provider error deeper in generateText.
+  if (!process.env.GROQ_API_KEY) {
+    throw new Error("GROQ_API_KEY is not set — the search agent cannot reach the language model.");
+  }
+
   const mcpClient = await createSanityMCPClient();
 
   try {

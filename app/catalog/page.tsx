@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { CatalogSearchForm } from "@/components/catalog/CatalogSearchForm";
@@ -7,6 +8,18 @@ import { getCategories, getCourseBySlug, getCourses } from "@/sanity/lib/queries
 import { computeMockProgress } from "@/lib/mock-progress";
 
 const CONTINUE_LEARNING_COUNT = 2;
+
+export async function generateMetadata(): Promise<Metadata> {
+  const [courses, categories] = await Promise.all([getCourses(), getCategories()]);
+  const description = `Browse ${courses.length} course${courses.length === 1 ? "" : "s"} across ${categories.length} categor${categories.length === 1 ? "y" : "ies"} — every lesson searchable down to the exact moment.`;
+
+  return {
+    title: "Course catalog",
+    description,
+    openGraph: { title: "Course catalog", description },
+    twitter: { title: "Course catalog", description },
+  };
+}
 
 export default async function CatalogPage() {
   const [courses, categories] = await Promise.all([getCourses(), getCategories()]);

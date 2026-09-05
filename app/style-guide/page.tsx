@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Button } from "@/components/ui/Button";
 import { Badge } from "@/components/ui/Badge";
 import { ProgressBar } from "@/components/ui/ProgressBar";
@@ -176,6 +177,11 @@ const icons = [
   { name: "done", Icon: DoneIcon },
   { name: "next", Icon: NextIcon },
 ];
+
+export const metadata: Metadata = {
+  title: "Style guide",
+  robots: { index: false, follow: false },
+};
 
 export default function StyleGuide() {
   return (

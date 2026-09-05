@@ -1,3 +1,4 @@
+import { cache } from 'react'
 import { defineQuery } from 'next-sanity'
 
 import { sanityFetch } from './fetch'
@@ -40,7 +41,9 @@ export type CourseListItem = CourseCard & {
 
 const NEW_WINDOW_MS = 60 * 24 * 60 * 60 * 1000 // 60 days
 
-export async function getCourses() {
+// cache()'d: the catalog page and its generateMetadata both call this within
+// one request — memoizing keeps that to a single fetch.
+export const getCourses = cache(async () => {
   const courses = await sanityFetch<(CourseCard & { lessonDurations: (string | number)[][] })[]>(
     COURSES_QUERY,
   )
@@ -49,7 +52,7 @@ export async function getCourses() {
     ...course,
     isNew: now - new Date(course._createdAt).getTime() < NEW_WINDOW_MS,
   }))
-}
+})
 
 // Landing page "search demo" card — illustrative, not live search (search itself is a
 // separate future feature), but the course/lesson identities it shows are real content,
@@ -149,9 +152,11 @@ export const COURSE_BY_SLUG_QUERY = defineQuery(`
   }
 `)
 
-export async function getCourseBySlug(slug: string) {
+// cache()'d: the course page and its generateMetadata both call this for the
+// same slug within one request — memoizing keeps that to a single fetch.
+export const getCourseBySlug = cache(async (slug: string) => {
   return sanityFetch<CourseDetail | null>(COURSE_BY_SLUG_QUERY, { slug })
-}
+})
 
 export const COURSE_SLUGS_QUERY = defineQuery(`
   *[_type == "course" && defined(slug.current)].slug.current
@@ -230,7 +235,9 @@ function deriveLessonContext(
   }
 }
 
-export async function getLessonBySlug(slug: string) {
+// cache()'d: the lesson page and its generateMetadata both call this for the
+// same slug within one request — memoizing keeps that to a single fetch.
+export const getLessonBySlug = cache(async (slug: string) => {
   const lesson = await sanityFetch<LessonBySlugResult | null>(LESSON_BY_SLUG_QUERY, { slug })
   if (!lesson) return null
 
@@ -238,7 +245,7 @@ export async function getLessonBySlug(slug: string) {
   const context = deriveLessonContext(lesson._id, course)
 
   return { ...rest, context }
-}
+})
 
 // Batch lesson fetch by _id, used to resolve real display data for search
 // results after the search agent identifies matching lesson ids — never
@@ -346,9 +353,11 @@ export const CATEGORIES_QUERY = defineQuery(`
   }
 `)
 
-export async function getCategories() {
+// cache()'d: the catalog page and its generateMetadata both call this within
+// one request — memoizing keeps that to a single fetch.
+export const getCategories = cache(async () => {
   return sanityFetch<Category[]>(CATEGORIES_QUERY)
-}
+})
 
 // --- Minimal hand-written types until `npm run typegen` generates sanity.types.ts from the Studio ---
 

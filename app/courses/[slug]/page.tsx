@@ -1,6 +1,8 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getCourseBySlug, getCourseSlugs } from "@/sanity/lib/queries";
 import { getPostHogClient } from "@/lib/posthog-server";
+import { urlFor } from "@/sanity/lib/image";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { CourseHero } from "@/components/course/CourseHero";
@@ -15,6 +17,23 @@ import { computeMockProgress } from "@/lib/mock-progress";
 export async function generateStaticParams() {
   const slugs = await getCourseSlugs();
   return slugs.map((slug) => ({ slug }));
+}
+
+export async function generateMetadata({
+  params,
+}: PageProps<"/courses/[slug]">): Promise<Metadata> {
+  const { slug } = await params;
+  const course = await getCourseBySlug(slug);
+  if (!course) return {};
+
+  const image = course.coverImage ? urlFor(course.coverImage).width(1200).height(630).url() : undefined;
+
+  return {
+    title: course.title,
+    description: course.summary,
+    openGraph: { title: course.title, description: course.summary, images: image ? [image] : undefined },
+    twitter: { title: course.title, description: course.summary, images: image ? [image] : undefined },
+  };
 }
 
 export default async function CoursePage({

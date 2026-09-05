@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Markdown from "react-markdown";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
@@ -7,6 +8,22 @@ import { SearchExplorer } from "@/components/search/SearchExplorer";
 import { RecentSearches } from "@/components/search/RecentSearches";
 import { runSearch } from "@/lib/search";
 import { getSearchStats } from "@/sanity/lib/queries";
+
+// Query-string result pages are thin/duplicate content, not worth indexing —
+// and deliberately doesn't call runSearch() here, which would double the
+// (rate-limited) search agent call the page itself already makes.
+export async function generateMetadata({
+  searchParams,
+}: PageProps<"/search">): Promise<Metadata> {
+  const search = await searchParams;
+  const rawQuery = Array.isArray(search.q) ? search.q[0] : search.q;
+  const query = (rawQuery ?? "").trim();
+
+  return {
+    title: query ? `Search results for "${query}"` : "Search",
+    robots: { index: false, follow: true },
+  };
+}
 
 export default async function SearchPage({ searchParams }: PageProps<"/search">) {
   const search = await searchParams;

@@ -1,6 +1,7 @@
 import { ClerkProvider } from "@clerk/nextjs";
 import type { Metadata } from "next";
 import { Space_Grotesk, Inter, JetBrains_Mono, Bitter } from "next/font/google";
+import { siteDescription, siteName, siteUrl } from "@/lib/site-config";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -32,8 +33,26 @@ const bitter = Bitter({
 });
 
 export const metadata: Metadata = {
-  title: "Biblion",
-  description: "Find the exact second — search across every course, lesson and video moment.",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: siteName,
+    template: `%s · ${siteName}`,
+  },
+  description: siteDescription,
+  robots: { index: true, follow: true },
+  openGraph: {
+    type: "website",
+    siteName,
+    title: siteName,
+    description: siteDescription,
+    locale: "en_US",
+    url: siteUrl,
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: siteName,
+    description: siteDescription,
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

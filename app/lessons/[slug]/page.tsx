@@ -1,6 +1,9 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getCourseBySlug, getLessonBySlug, getLessonSlugs } from "@/sanity/lib/queries";
 import { flattenLessons } from "@/lib/mock-progress";
+import { toPlainText } from "@/lib/plain-text";
+import { urlFor } from "@/sanity/lib/image";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
 import { LessonProgressProvider } from "@/components/lesson/LessonProgressContext";
@@ -12,6 +15,28 @@ import { LessonSidebar } from "@/components/lesson/LessonSidebar";
 export async function generateStaticParams() {
   const slugs = await getLessonSlugs();
   return slugs.map((slug) => ({ slug }));
+}
+
+const META_DESCRIPTION_MAX_LENGTH = 160;
+
+export async function generateMetadata({
+  params,
+}: PageProps<"/lessons/[slug]">): Promise<Metadata> {
+  const { slug } = await params;
+  const lesson = await getLessonBySlug(slug);
+  if (!lesson) return {};
+
+  const title = lesson.context ? `${lesson.title} · ${lesson.context.courseTitle}` : lesson.title;
+  const description =
+    toPlainText(lesson.notes).slice(0, META_DESCRIPTION_MAX_LENGTH).trim() || undefined;
+  const image = lesson.poster ? urlFor(lesson.poster).width(1200).height(630).url() : undefined;
+
+  return {
+    title,
+    description,
+    openGraph: { title, description, images: image ? [image] : undefined },
+    twitter: { title, description, images: image ? [image] : undefined },
+  };
 }
 
 export default async function LessonPage({

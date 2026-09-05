@@ -1,52 +1,49 @@
 import "server-only";
 
 import { createMCPClient } from "@ai-sdk/mcp";
+import { defineQuery } from "next-sanity";
+import { sanityFetch } from "@/sanity/lib/fetch";
 
 // Server-only: connects to the Sanity Context MCP server. Never imported by
 // a client component — the read token stays on the server.
 
-function initialContextUrl(mcpUrl: string): string {
-  const url = new URL(mcpUrl);
-  url.pathname = `${url.pathname.replace(/\/$/, "")}/initial-context`;
-  return url.toString();
-}
+const AGENT_CONTEXT_SLUG = "search";
 
-let cachedInitialContext: string | null = null;
+const AGENT_CONTEXT_INSTRUCTIONS_QUERY = defineQuery(`
+  *[_type == "sanity.agentContext" && slug.current == $slug][0].instructions
+`);
+
+let cachedInstructions: string | null = null;
 let cacheTimestamp = 0;
 const CACHE_TTL_MS = 5 * 60 * 1000;
 
 /**
- * Fetches the MCP's schema overview once and caches it — gives a latency
- * win (no tool call needed for the model to learn the schema) and a stable
- * system-prompt prefix for caching.
- *
- * Currently unused by lib/search.ts: the free-tier LLM provider in use has
- * an 8000-token-per-minute budget, and this context alone was large enough
- * to blow through it on every request. search.ts leaves the model's
- * `initial_context` tool available instead, so it's fetched lazily (once,
- * only if needed) rather than injected into every request. Reach for this
- * again if a provider with more headroom is in use later.
+ * Fetches just the Context document's raw `instructions` field — via the
+ * app's own server-only Sanity client, not the Context MCP (whose groqFilter
+ * deliberately excludes `sanity.agentContext` from query results) and not
+ * the MCP's `/initial-context` endpoint (whose full schema+tools+instructions
+ * payload, at ~1000+ tokens, doesn't fit this app's tight per-minute token
+ * budget — see lib/search.ts). This is ~300-400 tokens, small enough to
+ * inject into every request, restoring the documented promise (AGENTS.md
+ * section 10) that editing the Context document in Studio changes agent
+ * behavior without a code deploy — cached for 5 minutes rather than fetched
+ * per-request, so an edit takes effect on the next request after the cache
+ * expires, not literally instantly.
  */
-export async function fetchInitialContext(): Promise<string | null> {
-  const mcpUrl = process.env.SANITY_CONTEXT_MCP_URL;
-  if (!mcpUrl) return null;
-
+export async function fetchAgentContextInstructions(): Promise<string | null> {
   const isStale = Date.now() - cacheTimestamp > CACHE_TTL_MS;
-  if (isStale || !cachedInitialContext) {
+  if (isStale) {
     try {
-      const res = await fetch(initialContextUrl(mcpUrl), {
-        headers: { Authorization: `Bearer ${process.env.SANITY_API_READ_TOKEN}` },
+      cachedInstructions = await sanityFetch<string | null>(AGENT_CONTEXT_INSTRUCTIONS_QUERY, {
+        slug: AGENT_CONTEXT_SLUG,
       });
-      if (res.ok) {
-        cachedInitialContext = await res.text();
-        cacheTimestamp = Date.now();
-      }
+      cacheTimestamp = Date.now();
     } catch {
-      // Fall through and return whatever's cached (possibly null).
+      // Fall through and return whatever's cached (possibly null/stale).
     }
   }
 
-  return cachedInitialContext;
+  return cachedInstructions;
 }
 
 export async function createSanityMCPClient() {

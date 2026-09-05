@@ -37,6 +37,27 @@
 > returns full grounded results in one request. Back-to-back queries within
 > the same 60-second window can still get starved by the shared TPM budget
 > — an inherent free-tier throughput ceiling, not a code bug.
+>
+> **Addendum 2 (Context document reconnected):** the fix above hand-wrote
+> schema notes directly into the system prompt, which meant the Sanity
+> Context document's `instructions` field — the one AGENTS.md section 10
+> says editors can tune without a code deploy — had no path to the model at
+> all (confirmed by inspecting the MCP's real `groq_query` tool description:
+> it's a generic GROQ tutorial with no trace of our custom instructions;
+> the custom instructions only ever flow through `initial_context`, which
+> we'd removed). Fixed via `fetchAgentContextInstructions()`
+> (`lib/sanity-context.ts`): a tiny, directly-fetched, 5-minute-cached read
+> of just the document's raw `instructions` field (~300-500 tokens,
+> measured) via the app's own server-only Sanity client — not the Context
+> MCP (whose `groqFilter` deliberately excludes `sanity.agentContext` from
+> query results) and not the bulkier `/initial-context` endpoint. The
+> hand-written schema notes were removed from the system prompt in favor of
+> this, so the facts live in one place again. Also corrected three stale
+> claims in the Context document itself, verified against live data:
+> `lesson.duration` is always a raw number of seconds (not "normally a
+> string"), `lesson.poster` is never populated — only the legacy
+> `thumbnail` field is (not "some" lessons), and no video has any `chunks`
+> yet — 0/120, not "most". See `prompts/tune-search-context-and-prompt.md`.
 
 ## Goal
 

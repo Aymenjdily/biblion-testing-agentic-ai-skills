@@ -4,7 +4,7 @@ import { groq } from "@ai-sdk/groq";
 import { generateText, stepCountIs, tool } from "ai";
 import { z } from "zod";
 import { auth } from "@clerk/nextjs/server";
-import { createSanityMCPClient } from "@/lib/sanity-context";
+import { createSanityMCPClient, fetchAgentContextInstructions } from "@/lib/sanity-context";
 import { getLessonsByIds, type LessonSearchResult } from "@/sanity/lib/queries";
 import { getPostHogClient } from "@/lib/posthog-server";
 
@@ -59,25 +59,24 @@ const submitResultsTool = tool({
   inputSchema: submitResultsSchema,
 });
 
-function buildSystemPrompt(): string {
+function buildSystemPrompt(contextInstructions: string | null): string {
   return `You are Biblion's course search agent. You find lessons matching a learner's plain-language query and return them as structured results — never as conversational prose, never to the learner directly.
 
-# Schema (only the fields you need — do not call initial_context or schema_explorer, they are not available and would waste budget)
+# Voice
 
-- \`lesson\` document: title, slug, videoUrl (matches a video document's url), notes (Portable Text — use \`pt::text(notes)\` to text-match it), keyPoints (array of strings), duration, freePreview.
-- \`video\` document: id, url, chapters (array of {startSeconds, label} — the table of contents, clean labels), chunks (array of {startSeconds, text} — noisier transcript pieces, often empty for now).
-- \`course\` document: title, modules (array of {title, summary, lessons: array of references to lesson}). A lesson does not store its course — find it with \`*[_type == "course" && references($lessonId)][0]{title}\` if you need course context (usually you don't; the app resolves display data itself).
+The only text you ever write for a human to read is \`reply\`. Keep it to one plain, factual sentence stating what was found (e.g. "Found 6 lessons on streaming and Suspense.") — no marketing language, no exclamation points, no chatty filler.
 
 # Your job
 
 1. Use \`groq_query\` to find lessons matching the query in one shot: \`*[_type == "lesson" && (title match $kw || pt::text(notes) match $kw || keyPoints[] match $kw)]{_id, title}\`. Text match is token-based: split the query into keywords, wildcard each (e.g. \`"caching*"\`), and OR them — never match the whole query as one phrase.
-2. For each candidate lesson (there are usually only a few), look up its video document by URL in a second, single batched query: \`*[_type == "video" && url in $videoUrls]{url, chapters, chunks}\`. Match chapters first (real timestamps); only fall back to \`chunks\` if no chapter matches. An empty \`chunks\` array is normal, not an error.
+2. For each candidate lesson (there are usually only a few), look up its video document by URL in a second, single batched query: \`*[_type == "video" && url in $videoUrls]{url, chapters, chunks}\`. Match chapters first (real timestamps); only fall back to \`chunks\` if no chapter matches.
 3. Rank matches by specificity: a title match outranks a keyword buried in notes; a chapter match outranks either.
 4. Call \`submit_results\` exactly once, as your final action, with the matching lessons in ranked order (best first). Cap at 20 results.
 5. Emit \`kind: "video"\` with a real \`matchedSecond\` ONLY when you found an actual matching chapter or chunk with that exact \`startSeconds\` — never estimate or invent a timestamp. Otherwise emit \`kind: "lesson"\` with no \`matchedSecond\`.
 6. If nothing matches, call \`submit_results\` with an empty \`results\` array. Never invent a lesson that didn't come back from a real query.
 
-This runs on a strict token-per-minute budget: use as few tool calls as possible (2 groq_query calls total is the target — one for lessons, one batched lookup for videos), and project only the fields listed above, never whole documents. Never state a lesson's price, duration, or any other display fact directly — you only identify which lessons matched and why; the application resolves and displays the real data.`;
+This runs on a strict token-per-minute budget: use as few tool calls as possible (2 groq_query calls total is the target — one for lessons, one batched lookup for videos), and project only the fields you need, never whole documents. Never state a lesson's price, duration, or any other display fact directly — you only identify which lessons matched and why; the application resolves and displays the real data.
+${contextInstructions ? `\n# Data notes (from the Context document — schema quirks and query patterns, kept in sync with the live dataset)\n\n${contextInstructions}` : ""}`;
 }
 
 export type SearchResultItem = SubmitResultsInput["results"][number] & {
@@ -140,12 +139,13 @@ export async function runSearch(query: string): Promise<SearchResponse> {
     // ~2371 chars of schema (~593 tokens) plus a ~4072 char (~1018 token)
     // result if called, and `schema_explorer`/`array_field_reader` add
     // another ~4700 chars (~1200 tokens) of tool schema resent every step
-    // for capabilities this search never uses. Dropping all three and
-    // hand-writing the (small, stable) schema directly into the system
-    // prompt above removes that cost entirely — the model never needs to
-    // call them. Keeping only `groq_query`, with its description trimmed
-    // (the MCP's built-in ~8280 char GROQ tutorial is redundant with the
-    // query guidance already in the system prompt).
+    // for capabilities this search never uses. Dropping all three keeps
+    // the model from ever calling them. Keeping only `groq_query`, with its
+    // description trimmed (the MCP's built-in ~8280 char GROQ tutorial is
+    // redundant with the query guidance already in the system prompt) —
+    // schema facts instead come from fetchAgentContextInstructions() below,
+    // a much smaller (~300-400 token), directly-fetched, cached read of just
+    // the Context document's instructions field.
     const rawMcpTools = await mcpClient.tools();
     const mcpTools = {
       groq_query: {
@@ -154,9 +154,11 @@ export async function runSearch(query: string): Promise<SearchResponse> {
       } as typeof rawMcpTools.groq_query,
     };
 
+    const contextInstructions = await fetchAgentContextInstructions();
+
     const result = await generateText({
       model: groq(process.env.GROQ_SEARCH_MODEL || DEFAULT_MODEL),
-      system: buildSystemPrompt(),
+      system: buildSystemPrompt(contextInstructions),
       prompt: `Learner's search query: ${trimmed}`,
       tools: {
         ...mcpTools,

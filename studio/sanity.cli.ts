@@ -9,6 +9,9 @@ const dataset = process.env.SANITY_STUDIO_DATASET || 'production'
 
 export default defineCliConfig({
   api: { projectId, dataset },
+  deployment: {
+    appId: 'w4wtqpwyd89kqx5t5xxgb76l',
+  },
   // TypeGen reads GROQ queries from the web app and writes generated types back into it.
   // https://www.sanity.io/docs/sanity-typegen
   typegen: {

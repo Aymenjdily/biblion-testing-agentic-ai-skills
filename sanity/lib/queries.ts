@@ -200,33 +200,86 @@ export type LessonContext = {
   lessonIndex: number
 }
 
+function deriveLessonContext(
+  lessonId: string,
+  course: { title: string; slug: string; modules: { title: string; lessons: { _ref: string }[] }[] } | null,
+): LessonContext | null {
+  if (!course) return null
+
+  const moduleIndex = course.modules.findIndex((courseModule) =>
+    courseModule.lessons?.some((ref) => ref._ref === lessonId),
+  )
+  const courseModule = moduleIndex >= 0 ? course.modules[moduleIndex] : undefined
+  const lessonIndex = courseModule?.lessons?.findIndex((ref) => ref._ref === lessonId) ?? -1
+
+  if (!courseModule || lessonIndex < 0) return null
+
+  return {
+    courseTitle: course.title,
+    courseSlug: course.slug,
+    moduleIndex,
+    moduleTitle: courseModule.title,
+    lessonIndex,
+  }
+}
+
 export async function getLessonBySlug(slug: string) {
   const lesson = await sanityFetch<LessonBySlugResult | null>(LESSON_BY_SLUG_QUERY, { slug })
   if (!lesson) return null
 
   const { course, ...rest } = lesson
-  let context: LessonContext | null = null
-
-  if (course) {
-    const moduleIndex = course.modules.findIndex((courseModule) =>
-      courseModule.lessons?.some((ref: { _ref: string }) => ref._ref === lesson._id),
-    )
-    const courseModule = moduleIndex >= 0 ? course.modules[moduleIndex] : undefined
-    const lessonIndex =
-      courseModule?.lessons?.findIndex((ref: { _ref: string }) => ref._ref === lesson._id) ?? -1
-
-    if (courseModule && lessonIndex >= 0) {
-      context = {
-        courseTitle: course.title,
-        courseSlug: course.slug,
-        moduleIndex,
-        moduleTitle: courseModule.title,
-        lessonIndex,
-      }
-    }
-  }
+  const context = deriveLessonContext(lesson._id, course)
 
   return { ...rest, context }
+}
+
+// Batch lesson fetch by _id, used to resolve real display data for search
+// results after the search agent identifies matching lesson ids — never
+// trust the agent's own account of a lesson's title/duration/labels.
+export const LESSONS_BY_IDS_QUERY = defineQuery(`
+  *[_type == "lesson" && _id in $ids]{
+    _id,
+    title,
+    "slug": slug.current,
+    "poster": coalesce(poster, thumbnail),
+    duration,
+    freePreview,
+    keyPoints,
+    "course": *[_type == "course" && references(^._id)][0]{
+      title,
+      "slug": slug.current,
+      modules[]{ title, lessons },
+    },
+  }
+`)
+
+export type LessonSearchResult = {
+  _id: string
+  title: string
+  slug: string
+  poster: SanityImageRef
+  duration: string | number
+  freePreview: boolean
+  keyPoints: string[]
+  context: LessonContext | null
+}
+
+type LessonsByIdsResult = Omit<LessonSearchResult, 'context'> & {
+  course: {
+    title: string
+    slug: string
+    modules: { title: string; lessons: { _ref: string }[] }[]
+  } | null
+}
+
+export async function getLessonsByIds(ids: string[]): Promise<LessonSearchResult[]> {
+  if (ids.length === 0) return []
+  const lessons = await sanityFetch<LessonsByIdsResult[]>(LESSONS_BY_IDS_QUERY, { ids })
+
+  return lessons.map((lesson) => {
+    const { course, ...rest } = lesson
+    return { ...rest, context: deriveLessonContext(lesson._id, course) }
+  })
 }
 
 export const INSTRUCTOR_BY_SLUG_QUERY = defineQuery(`

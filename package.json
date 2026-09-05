@@ -9,15 +9,20 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@ai-sdk/mcp": "^2.0.45",
+    "@ai-sdk/openai": "^4.0.59",
     "@clerk/nextjs": "^7.9.1",
     "@portabletext/react": "^8.0.1",
     "@sanity/image-url": "^2.1.1",
+    "ai": "^7.0.93",
     "next": "16.3.4",
     "next-sanity": "^13.3.4",
     "posthog-js": "^1.427.2",
     "posthog-node": "^5.51.6",
     "react": "19.2.8",
-    "react-dom": "19.2.8"
+    "react-dom": "19.2.8",
+    "react-markdown": "^10.1.0",
+    "zod": "^4.5.4"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",

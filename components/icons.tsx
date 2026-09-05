@@ -213,6 +213,49 @@ export function NextIcon(props: IconProps) {
   );
 }
 
+export function ChevronLeftIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <path d="M15 6 L9 12 L15 18" />
+    </svg>
+  );
+}
+
+export function LockIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <rect x="5.5" y="11" width="13" height="9" rx="1.8" />
+      <path d="M8 11V7.5a4 4 0 0 1 8 0V11" />
+    </svg>
+  );
+}
+
+export function InfinityIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <path d="M7 8.5a3.5 3.5 0 1 0 0 7c2.5 0 3.5-2.2 5-3.5 1.5-1.3 2.5-3.5 5-3.5a3.5 3.5 0 1 1 0 7c-2.5 0-3.5-2.2-5-3.5-1.5-1.3-2.5-3.5-5-3.5Z" />
+    </svg>
+  );
+}
+
+export function UndoIcon(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <path d="M5 8.5h6.5a5.5 5.5 0 1 1-5.2 7.3" />
+      <path d="M5 8.5V4.5" />
+      <path d="M5 8.5H9" />
+    </svg>
+  );
+}
+
+export function FlameIcon(props: IconProps) {
+  return (
+    <svg {...solid} {...props}>
+      <path d="M12 2c1 2.5-.5 3.8-1.7 5.2C9 8.6 8 10 8 12a4 4 0 0 0 8 0c0-1-.3-1.8-.8-2.6.8.6 1.8 1.8 1.8 3.6a5 5 0 0 1-10 0c0-4 3-5.5 3.7-7C11 4.8 11.3 3.3 12 2Z" />
+    </svg>
+  );
+}
+
 export function BiblionMark(props: IconProps) {
   return (
     <svg viewBox="0 0 24 24" {...props}>

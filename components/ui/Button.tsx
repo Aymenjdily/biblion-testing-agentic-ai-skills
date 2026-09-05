@@ -28,16 +28,29 @@ const sizes: Record<ButtonSize, string> = {
   sm: "h-9 px-4 text-[13px]",
 };
 
+/** Button's visual classes, for a non-<button> element (e.g. a Link) that needs to look like one. */
+export function buttonClasses({
+  variant = "primary",
+  size = "md",
+  className,
+}: {
+  variant?: ButtonVariant;
+  size?: ButtonSize;
+  className?: string;
+} = {}) {
+  const sizing = variant === "ghost" ? "" : sizes[size];
+  return clsx(base, variants[variant], sizing, className);
+}
+
 export function Button({
   variant = "primary",
   size = "md",
   className,
   ...props
 }: ButtonProps) {
-  const sizing = variant === "ghost" ? "" : sizes[size];
   return (
     <button
-      className={clsx(base, variants[variant], sizing, className)}
+      className={buttonClasses({ variant, size, className })}
       {...props}
     />
   );

@@ -1,6 +1,9 @@
+import Image from "next/image";
 import Link from "next/link";
-import { NavAuth } from "@/components/auth/NavAuth";
-import { Button } from "@/components/ui/Button";
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
+import { buttonClasses } from "@/components/ui/Button";
+import { CtaButton } from "@/components/ui/CtaButton";
 import {
   BiblionMark,
   ChevronDownIcon,
@@ -8,31 +11,9 @@ import {
   PlayIcon,
   SearchIcon,
 } from "@/components/icons";
-
-const demoResults = [
-  {
-    course: "NEXT.JS FOUNDATIONS",
-    lesson: "LESSON 5.1",
-    title: "Streaming SSR with Suspense boundaries",
-    description:
-      "Nested boundaries, fallback orchestration, and streaming order in the App Router.",
-    timestamp: "12:34",
-  },
-  {
-    course: "REACT IN PRODUCTION",
-    lesson: "LESSON 3.2",
-    title: "Data fetching and caching strategies",
-    description: "Request memoization, cache tags, and when to revalidate on demand.",
-    timestamp: "04:17",
-  },
-  {
-    course: "APP ROUTER MASTERY",
-    lesson: "LESSON 2.4",
-    title: "Server Components, client boundaries",
-    description: "What runs where, how props cross the boundary, and common pitfalls.",
-    timestamp: "21:08",
-  },
-];
+import { getFeaturedLessonMoments } from "@/sanity/lib/queries";
+import { urlFor } from "@/sanity/lib/image";
+import { formatClock, toSeconds } from "@/lib/duration";
 
 const stats = [
   { value: "12,400+", label: "LESSON MOMENTS INDEXED" },
@@ -75,34 +56,14 @@ function Eyebrow({ children }: { children: React.ReactNode }) {
   );
 }
 
-export default function Home() {
+export default async function Home() {
+  const featuredLessons = await getFeaturedLessonMoments();
+
   return (
     <div className="flex-1">
       {/* ---- Nav + hero on soft ember gradient ---- */}
       <div className="bg-hero-shader">
-        <header className="mx-auto flex h-18 max-w-6xl items-center justify-between px-6 sm:px-10">
-          <Link href="/" className="flex items-center gap-2.5">
-            <BiblionMark className="h-8 w-8" />
-            <span className="font-logo text-[22px] font-bold text-ink-900">Biblion</span>
-          </Link>
-
-          <nav className="hidden items-center gap-10 text-sm text-neutral-600 md:flex">
-            <a href="#" className="transition-colors hover:text-ink-900">
-              Product
-            </a>
-            <a href="#" className="transition-colors hover:text-ink-900">
-              Catalog
-            </a>
-            <a href="#" className="transition-colors hover:text-ink-900">
-              Instructors
-            </a>
-            <a href="#" className="transition-colors hover:text-ink-900">
-              Pricing
-            </a>
-          </nav>
-
-          <NavAuth />
-        </header>
+        <Header transparent />
 
         {/* ---- Hero ---- */}
         <section className="mx-auto max-w-6xl px-6 pb-20 pt-16 sm:px-10 md:pb-28 md:pt-20">
@@ -120,14 +81,16 @@ export default function Home() {
                 taught.
               </p>
               <div className="mt-9 flex flex-wrap items-center gap-7">
-                <Button className="px-7">Start free trial</Button>
-                <a
-                  href="#"
+                <Link href="/catalog" className={buttonClasses({ className: "px-7" })}>
+                  Start free trial
+                </Link>
+                <Link
+                  href="/catalog"
                   className="flex items-center gap-2 text-[15px] font-semibold text-ink-900 transition-colors hover:text-ember-700"
                 >
                   View live demo
                   <NextIcon className="h-4 w-4" />
-                </a>
+                </Link>
               </div>
               <p className="mt-8 font-mono text-[11px] tracking-[0.18em] text-neutral-400">
                 FREE PREVIEW LESSONS · NO CREDIT CARD REQUIRED
@@ -171,37 +134,62 @@ export default function Home() {
           </div>
 
           <div className="divide-y divide-border">
-            {demoResults.map((r) => (
-              <div key={r.title} className="flex flex-wrap items-center gap-5 px-6 py-5">
-                <div className="relative h-24 w-40 shrink-0 overflow-hidden rounded-lg bg-gradient-to-br from-neutral-700 to-ink-900">
-                  <span className="absolute left-1/2 top-1/2 flex h-9 w-9 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm">
-                    <PlayIcon className="h-3.5 w-3.5 text-white" />
-                  </span>
-                  <span className="absolute bottom-1.5 right-1.5 rounded bg-ink-900/80 px-1.5 py-0.5 font-mono text-[10px] tabular-nums text-white">
-                    {r.timestamp}
-                  </span>
-                </div>
-
-                <div className="min-w-0 flex-1">
-                  <p className="font-mono text-[11px] tracking-wide text-ember-600">
-                    {r.course} · {r.lesson}
-                  </p>
-                  <h3 className="mt-1 font-display text-lg font-semibold text-ink-900">
-                    {r.title}
-                  </h3>
-                  <p className="mt-1 text-sm text-neutral-500">{r.description}</p>
-                </div>
-
-                <button
-                  type="button"
-                  className="flex h-9 items-center gap-2 rounded-full border border-border bg-surface px-4 text-[13px] font-medium text-ink-900 transition-colors duration-[120ms] hover:bg-neutral-50"
+            {featuredLessons.map((r) => {
+              const durationLabel = formatClock(toSeconds(r.duration));
+              return (
+                <Link
+                  key={r.lessonSlug}
+                  href={`/courses/${r.courseSlug}`}
+                  className="flex flex-wrap items-center gap-5 px-6 py-5 transition-colors hover:bg-neutral-50"
                 >
-                  <PlayIcon className="h-3 w-3 text-ember-600" />
-                  Watch · {r.timestamp}
-                </button>
-              </div>
-            ))}
+                  <div className="relative h-24 w-40 shrink-0 overflow-hidden rounded-lg bg-gradient-to-br from-neutral-700 to-ink-900">
+                    {r.poster && (
+                      <Image
+                        src={urlFor(r.poster).width(320).height(180).url()}
+                        alt=""
+                        fill
+                        className="object-cover opacity-80"
+                      />
+                    )}
+                    <span className="absolute left-1/2 top-1/2 flex h-9 w-9 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-white/20 backdrop-blur-sm">
+                      <PlayIcon className="h-3.5 w-3.5 text-white" />
+                    </span>
+                    <span className="absolute bottom-1.5 right-1.5 rounded bg-ink-900/80 px-1.5 py-0.5 font-mono text-[10px] tabular-nums text-white">
+                      {durationLabel}
+                    </span>
+                  </div>
+
+                  <div className="min-w-0 flex-1">
+                    <p className="font-mono text-[11px] tracking-wide text-ember-600">
+                      {r.courseTitle.toUpperCase()} · LESSON {r.moduleIndex + 1}.
+                      {r.lessonIndex + 1}
+                    </p>
+                    <h3 className="mt-1 font-display text-lg font-semibold text-ink-900">
+                      {r.lessonTitle}
+                    </h3>
+                    {r.description && (
+                      <p className="mt-1 text-sm text-neutral-500">{r.description}</p>
+                    )}
+                  </div>
+
+                  <span className="flex h-9 items-center gap-2 rounded-full border border-border bg-surface px-4 text-[13px] font-medium text-ink-900 transition-colors duration-[120ms] hover:bg-neutral-50">
+                    <PlayIcon className="h-3 w-3 text-ember-600" />
+                    Watch · {durationLabel}
+                  </span>
+                </Link>
+              );
+            })}
           </div>
+        </div>
+
+        <div className="mt-6 text-center">
+          <Link
+            href="/catalog"
+            className="inline-flex items-center gap-2 text-[15px] font-semibold text-ember-600 transition-colors hover:text-ember-700"
+          >
+            View all courses
+            <NextIcon className="h-4 w-4" />
+          </Link>
         </div>
       </section>
 
@@ -267,24 +255,11 @@ export default function Home() {
           <p className="mt-4 text-[15px] text-neutral-400">
             Free for your first course · no credit card required
           </p>
-          <Button className="mt-9 px-8">Get started free</Button>
-        </div>
-
-        <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-4 border-t border-white/10 px-6 py-6 sm:px-10">
-          <p className="font-mono text-[11px] tracking-[0.18em] text-neutral-500">
-            © 2026 BIBLION
-          </p>
-          <p className="font-mono text-[11px] tracking-[0.18em] text-neutral-500">
-            PRIVACY · TERMS · CONTACT
-          </p>
-        </div>
-
-        <div className="overflow-hidden" aria-hidden="true">
-          <p className="-mb-[0.23em] select-none bg-gradient-to-b from-ember-400 via-ember-600 to-ember-800 bg-clip-text text-center font-display text-[19vw] font-bold leading-none tracking-tight text-transparent">
-            BIBLION
-          </p>
+          <CtaButton label="Get started free" ctaId="footer_get_started_free" className="mt-9 px-8" />
         </div>
       </section>
+
+      <Footer />
     </div>
   );
 }

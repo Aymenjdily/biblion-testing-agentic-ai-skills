@@ -21,6 +21,12 @@ export const course = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
+      name: 'code',
+      title: 'Course Code',
+      description: 'Short catalog code shown on course cards, e.g. "NEXT-007"',
+      type: 'string',
+    }),
+    defineField({
       name: 'summary',
       title: 'Summary',
       type: 'text',
@@ -66,6 +72,27 @@ export const course = defineType({
       type: 'number',
       initialValue: 0,
       validation: (rule) => rule.min(0),
+    }),
+    defineField({
+      name: 'rating',
+      title: 'Rating',
+      description: 'Average rating out of 5, e.g. 4.9',
+      type: 'number',
+      validation: (rule) => rule.min(0).max(5),
+    }),
+    defineField({
+      name: 'ratingCount',
+      title: 'Rating Count',
+      type: 'number',
+      initialValue: 0,
+      validation: (rule) => rule.min(0),
+    }),
+    defineField({
+      name: 'tags',
+      title: 'Tags',
+      description: 'Short tech/topic tags shown on the course page, e.g. "Next.js 15"',
+      type: 'array',
+      of: [defineArrayMember({ type: 'string' })],
     }),
     defineField({
       name: 'learningOutcomes',

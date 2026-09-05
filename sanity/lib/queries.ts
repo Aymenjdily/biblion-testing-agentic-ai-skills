@@ -4,24 +4,127 @@ import { sanityFetch } from './fetch'
 
 const COURSE_CARD_PROJECTION = /* groq */ `{
   _id,
+  _createdAt,
+  _updatedAt,
   title,
   "slug": slug.current,
+  code,
   summary,
   coverImage,
   level,
   price,
   popular,
   studentCount,
-  "instructor": instructor->{ _id, name, "slug": slug.current, photo },
+  rating,
+  ratingCount,
+  tags,
+  "instructor": instructor->{ _id, name, "slug": slug.current, photo, bio },
   "category": category->{ _id, title, "slug": slug.current },
 }`
 
 export const COURSES_QUERY = defineQuery(`
-  *[_type == "course" && defined(slug.current)] | order(title asc) ${COURSE_CARD_PROJECTION}
+  *[_type == "course" && defined(slug.current)] | order(title asc) {
+    ...${COURSE_CARD_PROJECTION},
+    "lessonDurations": modules[].lessons[]->duration,
+  }
 `)
 
+export type CourseListItem = CourseCard & {
+  // One array per module, each holding that module's lesson durations —
+  // kept lightweight (durations only) so the catalog list query stays cheap.
+  lessonDurations: (string | number)[][]
+  // Derived from _createdAt at fetch time (not stored, not computed at render
+  // time in a component — see the "New" badge note in prompts/catalog-page.md).
+  isNew: boolean
+}
+
+const NEW_WINDOW_MS = 60 * 24 * 60 * 60 * 1000 // 60 days
+
 export async function getCourses() {
-  return sanityFetch<CourseCard[]>(COURSES_QUERY)
+  const courses = await sanityFetch<(CourseCard & { lessonDurations: (string | number)[][] })[]>(
+    COURSES_QUERY,
+  )
+  const now = Date.now()
+  return courses.map((course) => ({
+    ...course,
+    isNew: now - new Date(course._createdAt).getTime() < NEW_WINDOW_MS,
+  }))
+}
+
+// Landing page "search demo" card — illustrative, not live search (search itself is a
+// separate future feature), but the course/lesson identities it shows are real content,
+// never invented.
+export const FEATURED_LESSON_MOMENTS_QUERY = defineQuery(`
+  *[_type == "course"] | order(popular desc, title asc) [0...3]{
+    title,
+    "slug": slug.current,
+    "category": category->title,
+    modules[]{
+      title,
+      lessons[]->{
+        title,
+        "slug": slug.current,
+        "poster": coalesce(poster, thumbnail),
+        duration,
+        keyPoints,
+      },
+    },
+  }
+`)
+
+type FeaturedCourseResult = {
+  title: string
+  slug: string
+  category: string
+  modules: {
+    title: string
+    lessons: {
+      title: string
+      slug: string
+      poster: SanityImageRef
+      duration: string | number
+      keyPoints?: string[]
+    }[]
+  }[]
+}
+
+export type FeaturedLessonMoment = {
+  courseTitle: string
+  courseSlug: string
+  moduleIndex: number
+  lessonIndex: number
+  lessonTitle: string
+  lessonSlug: string
+  poster: SanityImageRef
+  duration: string | number
+  description: string
+}
+
+export async function getFeaturedLessonMoments(): Promise<FeaturedLessonMoment[]> {
+  const courses = await sanityFetch<FeaturedCourseResult[]>(FEATURED_LESSON_MOMENTS_QUERY)
+
+  return courses.flatMap((course) => {
+    // Pick one representative lesson per course: the second module's first lesson
+    // when there is one, otherwise the course's first lesson.
+    const moduleIndex = course.modules.length > 1 ? 1 : 0
+    const lessonIndex = 0
+    const lesson = course.modules[moduleIndex]?.lessons[lessonIndex]
+    if (!lesson) return []
+
+    return [
+      {
+        courseTitle: course.title,
+        courseSlug: course.slug,
+        moduleIndex,
+        lessonIndex,
+        lessonTitle: lesson.title,
+        lessonSlug: lesson.slug,
+        poster: lesson.poster,
+        duration: lesson.duration,
+        description: lesson.keyPoints?.[0] ?? '',
+      },
+    ]
+  })
 }
 
 export const COURSE_BY_SLUG_QUERY = defineQuery(`
@@ -36,10 +139,11 @@ export const COURSE_BY_SLUG_QUERY = defineQuery(`
         _id,
         title,
         "slug": slug.current,
-        poster,
+        "poster": coalesce(poster, thumbnail),
         duration,
         freePreview,
         studentCount,
+        "resourceCount": count(resources),
       },
     },
   }
@@ -63,7 +167,7 @@ export const LESSON_BY_SLUG_QUERY = defineQuery(`
     title,
     "slug": slug.current,
     videoUrl,
-    poster,
+    "poster": coalesce(poster, thumbnail),
     duration,
     freePreview,
     studentCount,
@@ -79,6 +183,14 @@ export const LESSON_BY_SLUG_QUERY = defineQuery(`
     },
   }
 `)
+
+export const LESSON_SLUGS_QUERY = defineQuery(`
+  *[_type == "lesson" && defined(slug.current)].slug.current
+`)
+
+export async function getLessonSlugs() {
+  return sanityFetch<string[]>(LESSON_SLUGS_QUERY)
+}
 
 export type LessonContext = {
   courseTitle: string
@@ -152,15 +264,21 @@ type SanityImageRef = { asset?: { _ref: string; _type: 'reference' } }
 
 export type CourseCard = {
   _id: string
+  _createdAt: string
+  _updatedAt: string
   title: string
   slug: string
+  code: string | null
   summary: string
   coverImage: SanityImageRef
   level: 'beginner' | 'intermediate' | 'advanced'
   price: number
   popular: boolean
   studentCount: number
-  instructor: { _id: string; name: string; slug: string; photo: SanityImageRef }
+  rating: number | null
+  ratingCount: number | null
+  tags: string[] | null
+  instructor: { _id: string; name: string; slug: string; photo: SanityImageRef; bio: string }
   category: { _id: string; title: string; slug: string }
 }
 
@@ -175,9 +293,10 @@ export type CourseDetail = CourseCard & {
       title: string
       slug: string
       poster: SanityImageRef
-      duration: string
+      duration: string | number
       freePreview: boolean
       studentCount: number
+      resourceCount: number
     }[]
   }[]
 }
@@ -188,7 +307,7 @@ type LessonBySlugResult = {
   slug: string
   videoUrl: string
   poster: SanityImageRef
-  duration: string
+  duration: string | number
   freePreview: boolean
   studentCount: number
   notes: unknown

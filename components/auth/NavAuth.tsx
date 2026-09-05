@@ -1,13 +1,27 @@
 "use client";
 
-import { useAuth, useClerk, UserButton } from "@clerk/nextjs";
+import { useEffect } from "react";
+import { useAuth, useClerk, useUser, UserButton } from "@clerk/nextjs";
+import posthog from "posthog-js";
 import { Button } from "@/components/ui/Button";
 import { AlertsIcon } from "@/components/icons";
 
 /** Nav auth controls: Sign in / Get started when signed out, notifications bell + UserButton when signed in. */
 export function NavAuth() {
   const { isSignedIn } = useAuth();
+  const { user } = useUser();
   const clerk = useClerk();
+
+  // Identify the signed-in user with PostHog on mount and whenever auth state changes.
+  // useEffect is appropriate here as it synchronizes with the external Clerk auth system.
+  useEffect(() => {
+    if (isSignedIn && user) {
+      posthog.identify(user.id, {
+        email: user.primaryEmailAddress?.emailAddress,
+        name: user.fullName ?? undefined,
+      });
+    }
+  }, [isSignedIn, user]);
 
   if (isSignedIn) {
     return (
@@ -30,12 +44,12 @@ export function NavAuth() {
     <div className="flex items-center gap-6">
       <button
         type="button"
-        onClick={() => clerk.openSignIn()}
+        onClick={() => { posthog.capture("user_signed_in"); clerk.openSignIn(); }}
         className="hidden text-sm text-neutral-600 transition-colors hover:text-ink-900 sm:block"
       >
         Sign in
       </button>
-      <Button onClick={() => clerk.openSignUp()}>Get started</Button>
+      <Button onClick={() => { posthog.capture("user_signed_up"); clerk.openSignUp(); }}>Get started</Button>
     </div>
   );
 }

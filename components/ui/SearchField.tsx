@@ -3,13 +3,16 @@ import { clsx } from "@/lib/clsx";
 import { SearchIcon } from "@/components/icons";
 
 interface SearchFieldProps extends InputHTMLAttributes<HTMLInputElement> {
-  /** Show the / shortcut hint on the right (full-size field only). */
+  /** Show the shortcut hint on the right (full-size field only). */
   shortcut?: boolean;
+  /** Text shown in the shortcut hint, e.g. "/" or "⌘K". */
+  shortcutLabel?: string;
   compact?: boolean;
 }
 
 export function SearchField({
   shortcut = false,
+  shortcutLabel = "/",
   compact = false,
   className,
   ...props
@@ -39,7 +42,7 @@ export function SearchField({
       />
       {shortcut && !compact && (
         <kbd className="pointer-events-none absolute right-3 flex h-7 items-center rounded-chip border border-border bg-neutral-50 px-2 font-mono text-[11px] text-neutral-500">
-          /
+          {shortcutLabel}
         </kbd>
       )}
     </div>

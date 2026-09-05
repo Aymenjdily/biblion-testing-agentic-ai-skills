@@ -195,6 +195,7 @@ export async function getLessonSlugs() {
 export type LessonContext = {
   courseTitle: string
   courseSlug: string
+  courseLevel: CourseCard['level'] | null
   moduleIndex: number
   moduleTitle: string
   lessonIndex: number
@@ -202,7 +203,12 @@ export type LessonContext = {
 
 function deriveLessonContext(
   lessonId: string,
-  course: { title: string; slug: string; modules: { title: string; lessons: { _ref: string }[] }[] } | null,
+  course: {
+    title: string
+    slug: string
+    level?: CourseCard['level']
+    modules: { title: string; lessons: { _ref: string }[] }[]
+  } | null,
 ): LessonContext | null {
   if (!course) return null
 
@@ -217,6 +223,7 @@ function deriveLessonContext(
   return {
     courseTitle: course.title,
     courseSlug: course.slug,
+    courseLevel: course.level ?? null,
     moduleIndex,
     moduleTitle: courseModule.title,
     lessonIndex,
@@ -248,10 +255,17 @@ export const LESSONS_BY_IDS_QUERY = defineQuery(`
     "course": *[_type == "course" && references(^._id)][0]{
       title,
       "slug": slug.current,
+      level,
       modules[]{ title, lessons },
+    },
+    "video": *[_type == "video" && url == ^.videoUrl][0]{
+      chapters,
+      chunks,
     },
   }
 `)
+
+export type VideoMoment = { startSeconds: number; label: string }
 
 export type LessonSearchResult = {
   _id: string
@@ -262,14 +276,21 @@ export type LessonSearchResult = {
   freePreview: boolean
   keyPoints: string[]
   context: LessonContext | null
+  // Real chapters/chunks for this lesson's video — used to verify (never
+  // trust) a search agent's claimed matchedSecond, and to resolve the real
+  // label to display for it.
+  chapters: VideoMoment[]
+  chunks: VideoMoment[]
 }
 
-type LessonsByIdsResult = Omit<LessonSearchResult, 'context'> & {
+type LessonsByIdsResult = Omit<LessonSearchResult, 'context' | 'chapters' | 'chunks'> & {
   course: {
     title: string
     slug: string
+    level?: CourseCard['level']
     modules: { title: string; lessons: { _ref: string }[] }[]
   } | null
+  video: { chapters: VideoMoment[] | null; chunks: VideoMoment[] | null } | null
 }
 
 export async function getLessonsByIds(ids: string[]): Promise<LessonSearchResult[]> {
@@ -277,9 +298,27 @@ export async function getLessonsByIds(ids: string[]): Promise<LessonSearchResult
   const lessons = await sanityFetch<LessonsByIdsResult[]>(LESSONS_BY_IDS_QUERY, { ids })
 
   return lessons.map((lesson) => {
-    const { course, ...rest } = lesson
-    return { ...rest, context: deriveLessonContext(lesson._id, course) }
+    const { course, video, ...rest } = lesson
+    return {
+      ...rest,
+      context: deriveLessonContext(lesson._id, course),
+      chapters: video?.chapters ?? [],
+      chunks: video?.chunks ?? [],
+    }
   })
+}
+
+// Real, cheap aggregate stats for the search page's "browse the full
+// catalog" callout — never a fabricated round number.
+export const SEARCH_STATS_QUERY = defineQuery(`{
+  "courseCount": count(*[_type == "course"]),
+  "momentCount": count(*[_type == "video"].chapters[])
+}`)
+
+export type SearchStats = { courseCount: number; momentCount: number }
+
+export async function getSearchStats() {
+  return sanityFetch<SearchStats>(SEARCH_STATS_QUERY)
 }
 
 export const INSTRUCTOR_BY_SLUG_QUERY = defineQuery(`
